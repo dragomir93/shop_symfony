@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Čoko Moko | Login{% endblock %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link rel="stylesheet" type="text/css" href="{{asset('/css/login.css')}}">
+{% endblock %}
+
+{% block body %}
+
+{% block navBar %}
+
+ {{ include('nav_bar.html.twig') }}
+    
+{% endblock %}
+<br><br><br>
+<div class="container mt-5 mb-5">
+    <div class="row d-flex align-items-center justify-content-center">
+        <div class="col-md-6">
+            <div class="card px-5 py-5">
+                <form  method="POST" class="registration-form">
+                {% for error in app.flashes('error') %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ error }}
+                    </div>
+                {% endfor %}
+                    <h5 class="mt-3">Ulogujte se</h5>
+                    <small class="mt-2 text-muted">
+                    Možete se ulogovati  kako bi redovno dobijali informacije,lakše poručivali i imali druge pogodnosti kao ulogovan korisnik.
+                    </small>
+                    <div class="form-input">
+                        <i class="icon icon-user"></i>
+                        <input type="text" class="form-control" placeholder="Unesite email" name="email">
+                    </div>
+                    <div class="form-input">
+                        <i class="icon icon-lock"></i>
+                        <input type="password" class="form-control" placeholder="Unesite lozinku" name="password">
+                    </div>
+                    <button type ="submit" class="btn btn-primary mt-4 signup">Logovanje</button>
+                    <div class="text-center mt-4">
+                    <span>Nemate nalog?</span>
+                    <a href="{{ url('registration') }}" class="text-decoration-none">Registracija</a>
+                    </div>
+                    <br><br>
+                {% for message in app.flashes('success_login') %}
+                    <div class="alert alert-success" role="alert">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block footer %}
+
+ {{ include('footer.html.twig') }}
+
+{% endblock %}
+
+{% endblock %}

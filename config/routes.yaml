@@ -1,3 +1,87 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
+index:
+    path: /
+    controller: App\Controller\HomeController::index
+
+home_path:
+    path: /home
+    controller: App\Controller\HomeController::index
+    
+article_list:
+    path: /articles
+    controller: App\Controller\ArticleController::index
+
+article_id:
+    path: /article/{id}/
+    controller: App\Controller\ArticleController::getById
+
+contact:
+    path: /contact
+    controller: App\Controller\ContactController::index
+
+contact_handle:
+    path: /contact/handle
+    controller: App\Controller\ContactController::handle
+
+about_us:
+    path: /about_us
+    controller: App\Controller\AboutUsController::index
+
+login:
+    path: /login
+    controller: App\Controller\UserController::login
+
+registration:
+    path: /registration
+    controller: App\Controller\UserController::registration
+
+registration_handle:
+    path: /registration/handle
+    controller: App\Controller\UserController::handle
+
+cart_add:
+    path: /cart/add
+    controller: App\Controller\CartController::add
+
+cart_update:
+    path: /cart/update
+    controller: App\Controller\CartController::update
+
+cart_delete:
+    path: /cart/delete/{id}/
+    controller: App\Controller\CartController::delete
+
+order_checkout:
+    path: /checkout/
+    controller: App\Controller\OrderCheckoutController::index
+
+order_handle:
+    path: /order/handle
+    controller: App\Controller\OrderCheckoutController::handle
+
+order_preview:
+    path: /order_preview
+    controller: App\Controller\OrderCheckoutController::preview
+
+order_pdf:
+    path: /order_pdf
+    controller: App\Controller\OrderCheckoutController::orderPDF
+
+admin:
+    path: /admin
+    controller: App\Controller\AdminController::index
+
+admin_about_us:
+    path: /admin_about_us
+    controller: App\Controller\AdminController::about
+
+about_add:
+    path: /about_add
+    controller: App\Controller\AboutUsController::add
+
+about_edit:
+    path: /about/edit/{id}
+    controller: App\Controller\AboutUsController::edit
+
+about_delete:
+    path: /about/delete/{id}
+    controller: App\Controller\AboutUsController::delete

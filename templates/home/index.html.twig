@@ -1,0 +1,191 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Čoko Moko | Početna{% endblock %}
+
+{% block body %}
+
+{% block navBar %}
+
+ {{ include('nav_bar.html.twig') }}
+
+{% endblock %}
+
+    <section class="home-slider owl-carousel">
+      <div class="slider-item" style="background-image: url(images/bg_1.jpg);">
+      	<div class="overlay"></div>
+        <div class="container">
+        
+          <div class="row slider-text justify-content-center align-items-center" data-scrollax-parent="true">
+
+            <div class="col-md-8 col-sm-12 text-center ftco-animate">
+            	<span class="subheading">Dobrodošli</span>
+              <h1 class="mb-4">Probajte najbolju kafu u Srbiji</h1>
+              <p class="mb-4 mb-md-5">U nastavku možete pogledati našu ponudu i poručiti neki od proizvoda</p>
+              <p><a href="{{ path('articles') }}" class="btn btn-primary p-3 px-xl-4 py-xl-3">Poručite</a></p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="slider-item" style="background-image: url(images/bg_2.jpg);">
+      	<div class="overlay"></div>
+        <div class="container">
+        
+          <div class="row slider-text justify-content-center align-items-center" data-scrollax-parent="true">
+          <div class="col-md-8 col-sm-12 text-center ftco-animate">
+            	<span class="subheading">Dobrodošli</span>
+              <h1 class="mb-4">Probajte najbolju kafu u Srbiji</h1>
+              <p class="mb-4 mb-md-5">U nastavku možete pogledati našu ponudu i poručiti neki od proizvoda</p>
+              <p><a href="{{ path('articles') }}" class="btn btn-primary p-3 px-xl-4 py-xl-3">Poručite</a></p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="slider-item" style="background-image: url(images/bg_3.jpg);">
+      	<div class="overlay"></div>
+        <div class="container">
+          <div class="row slider-text justify-content-center align-items-center" data-scrollax-parent="true">
+
+            <div class="col-md-8 col-sm-12 text-center ftco-animate">
+            	<span class="subheading">Dobrodošli</span>
+              <h1 class="mb-4">Probajte najbolju kafu u Srbiji</h1>
+              <p class="mb-4 mb-md-5">U nastavku možete pogledati našu ponudu i poručiti neki od proizvoda</p>
+              <p><a href="{{ path('articles') }}" class="btn btn-primary p-3 px-xl-4 py-xl-3">Poručite</a></p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+	
+   
+    <section class="ftco-section ftco-services">
+    	<div class="container">
+    		<div class="row">
+
+          <div class="col-md-4 ftco-animate">
+            <div class="media d-block text-center block-6 services">
+              <div class="icon d-flex justify-content-center align-items-center mb-5">
+              	<span class="flaticon-choices"></span>
+              </div>
+              <div class="media-body">
+                <h3 class="heading">Lako je poručiti</h3>
+                <p>Preko našeg sajta možete brzo lako i jednostavno poručiti naše proizvode.</p>
+              </div>
+            </div>      
+          </div>
+
+          <div class="col-md-4 ftco-animate">
+            <div class="media d-block text-center block-6 services">
+              <div class="icon d-flex justify-content-center align-items-center mb-5">
+              	<span class="flaticon-delivery-truck"></span>
+              </div>
+              <div class="media-body">
+                <h3 class="heading">Brza dostava</h3>
+                <p>Dostava se vrši putem kurirskih službi ili ličnim preuzimanjem.Takođe dostavljamo na teritoriji Beograda.</p>
+              </div>
+            </div>      
+          </div>
+
+          <div class="col-md-4 ftco-animate">
+            <div class="media d-block text-center block-6 services">
+              <div class="icon d-flex justify-content-center align-items-center mb-5">
+              	<span class="flaticon-coffee-bean"></span></div>
+              <div class="media-body">
+                <h3 class="heading">Kvalitet kafe</h3>
+                <p>Jedna od kvalitetnijih kafi na našem tržištu,dobar miris,ukus.</p>
+              </div>
+            </div>    
+          </div>
+          
+        </div>
+    	</div>
+    </section>
+
+    <section class="ftco-counter ftco-bg-dark img" id="section-counter" style="background-image: url(images/bg_2.jpg);" data-stellar-background-ratio="0.5">
+			<div class="overlay"></div>
+      <div class="container">
+        <div class="row justify-content-center">
+        	<div class="col-md-10">
+          	<div class="row">
+		          <div class="col-md-6 col-lg-3 d-flex justify-content-center counter-wrap ftco-animate">
+		            <div class="block-18 text-center">
+		              <div class="text">
+		              	<div class="icon"><span class="flaticon-coffee-cup"></span></div>
+		              	<strong class="number" data-number="3">0</strong>
+		              	<span>Godina rada</span>
+		              </div>
+		            </div>
+		          </div>
+		          <div class="col-md-6 col-lg-3 d-flex justify-content-center counter-wrap ftco-animate">
+		            <div class="block-18 text-center">
+		              <div class="text">
+		              	<div class="icon"><span class="flaticon-coffee-cup"></span></div>
+		              	<strong class="number" data-number="10">0</strong>
+		              	<span>Dobijenih nagrada</span>
+		              </div>
+		            </div>
+		          </div>
+		          <div class="col-md-6 col-lg-3 d-flex justify-content-center counter-wrap ftco-animate">
+		            <div class="block-18 text-center">
+		              <div class="text">
+		              	<div class="icon"><span class="flaticon-coffee-cup"></span></div>
+		              	<strong class="number" data-number="10000">0</strong>
+		              	<span>Zadovoljnih kupaca</span>
+		              </div>
+		            </div>
+		          </div>
+		          <div class="col-md-6 col-lg-3 d-flex justify-content-center counter-wrap ftco-animate">
+		            <div class="block-18 text-center">
+		              <div class="text">
+		              	<div class="icon"><span class="flaticon-coffee-cup"></span></div>
+		              	<strong class="number" data-number="900">0</strong>
+		              	<span>Usluznih objekata</span>
+		              </div>
+		            </div>
+		          </div>
+		        </div>
+		      </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="ftco-section">
+    <div class="container">
+      <div class="row justify-content-center mb-5 pb-3">
+        <div class="col-md-7 heading-section ftco-animate text-center">
+          <span class="subheading">Otkrijte</span>
+			    <br>
+          <h2 class="mb-4">Najprodavanije proizvode</h2>
+          <p>U nastavku možete pogledati neke od najporavanijih proizvoda,kao i neke od proizvoda na popustu.</p>
+        </div>
+      </div>
+
+      <div class="row">
+		    {% for article in articles %}
+          <div class="col-md-3">
+            <div class="menu-entry">
+                <a href="{{ path('article_id',{'id':article.id}) }}" class="img" style="background-image: url({{ article.images.path }});"></a>
+                <div class="text text-center pt-4">
+                  <h3><a href="#">{{ article.title }}</a></h3>
+                  <p>{{ article.description }}</p>
+                  <p class="price"><span>{{ article.price }}. 00 din</span></p>
+                  <p><a href="{{ path('article_id',{'id':article.id}) }}" class="btn btn-primary btn-outline-primary">Korpa</a></p>
+                </div>
+            </div>
+          </div>
+		    {% endfor %}
+      </div>
+    </div>
+    </section>
+
+{% block footer %}
+
+ {{ include('footer.html.twig') }}
+
+{% endblock %}
+
+{% endblock %}

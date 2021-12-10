@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+{% for value in orders %}
+  <title>Faktura {{ value.id}}</title>
+
+  <style type="text/css">
+      * {
+      font-family: "DejaVu Sans", sans-serif;
+  
+      }
+      table{
+          font-size: x-small;
+      }
+      tfoot tr td{
+          font-weight: bold;
+          font-size: x-small;
+      }
+      .lightgreen {
+          background-color: lightgreen
+      }
+  </style>
+
+  </head>
+  <body>
+  <a style="display:block;background-color:lightgreen" href="http://kafina.rs" target="_blank" data-saferedirecturl="http://kafina.rs">
+  <div style="width:768px;margin:0 auto;padding:10px 0">
+  <img src="{{ absolute_url(asset('/images/logo.png')) }}" alt="shop-logo" style="display:inline-block;max-width:100%" class="CToWUd">
+  <p style="margin:30px 0;width:162px;text-align:center;font-weight:700;color:#fff;float:right">Datum porudžbine: <span style="font-weight:400">{{ value.getCreatedAt|date("d.m.Y. h:i:s") }}</span></p>
+  </div>
+  </a>
+  <h3><b>Poštovana-i, {{ app.user.name }} ,</b></h3>
+  <p>Zahvaljujemo se na Vašoj porudžbini i ukazanom poverenju. Vaša narudžbina je primljena. Šaljemo Vam detaljan obračun Vaše narudžbine.</p>
+
+  <h1>Vaša nadrudžbina je:</h1>
+    <h3 align="center">FAKTURA {{ value.id }}</h3>
+    <table width="100%">
+      <tr>
+          <td><strong>Od:</strong> cokomoko@gmail.com</td>
+          <td align="right"><strong>Za:</strong> {{ app.user.email }}</td>
+      </tr>
+
+    </table>
+
+    <br/>
+
+    <table width="100%">
+      <thead style="background-color: lightgreen;">
+        <tr>
+          <th>#</th>
+          <th>Proizvod</th>
+          <th>Opcije</th>
+          <th>Kolicina</th>
+          <th>Jedinstvena cena/din</th>
+          <th>Ukupno din</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for value2 in value.ordersProducts %}
+            <tr>
+              <th scope="row">{{ value2.articles.id }}</th>
+              <td>{{ value2.articles.title }}</td>
+              <td align="right">{{ value2.size }}</td>
+              <td align="right">{{ value2.quantity }}</td>
+              <td align="right">{{ value2.articles.price }}.00 din</td>
+              <td align="right">{{ value2.articles.price * value2.quantity }}.00 din</td>
+            </tr>
+          </tbody>
+        {% endfor %}
+      <tfoot>
+          <tr>
+              <td colspan="4"></td>
+              <td align="right">Ukupno proizvodi</td>
+              <td align="right">{{  value.total  }}.00 din</td>
+          </tr>
+          <tr>
+              <td colspan="4"></td>
+              <td align="right">Dostava</td>
+              <td align="right">200.00 din</td>
+          </tr>
+          <tr>
+              <td colspan="4"></td>
+              <td align="right">Ukupno za paćanje:</td>
+              <td align="right" class="lightgreen">{{ value.total + 200 }}.00 din</td>
+          </tr>
+      </tfoot>
+    </table>
+  <p>Naručene proizvode možete platiti kuriru prilikom preuzimanja pošiljke.</p>
+  <p>Ukoliko ste platili uplatnicom,potrebno je da istu dostavite na cokomoko@gmail.com sa naznakom PORUČIVANJE KAFE:IME PREZIME,mejl</p>
+  <p>(primer  PORUČIVANJE KAFE:Petar Petrović,petar@mail.rs)</p>
+  <p>Vaš paket će biti poslat u roku od 3-4 radna dana.</p>
+
+  <br><br><br>
+
+  <h1>PODACI O KORISNIKU </h1>
+  <p>Ime i prezime:  {{ app.user.name }}</p>
+  <p>Adresa: {{ app.user.adress ~ ',' ~ value.getPostalCode ~ ',' ~ value.city ~ ',' ~ value.country.name}} </p>
+  <p>Telefon:  {{ app.user.phone }} </p>
+  <p>E-mail: <a href="mailto:{{ app.user.email }}">{{ app.user.email }}</a></p>
+
+  <hr>
+
+  <h1>PODACI ZA ISPORUKU </h1>
+  <p>Ime i prezime:  {{ app.user.name }}</p>
+  <p>Adresa: {{ app.user.adress ~ ',' ~ value.getPostalCode ~ ',' ~ value.city ~ ',' ~ value.country.name}} </p>
+  <p>Telefon: {{ app.user.phone }}</p>
+  <p>E-mail: <a href="mailto:{{ app.user.email }}">{{ app.user.email }}</a></p>
+
+  <hr>
+
+  <h1>PODACI O PLAĆANJU </h1>
+  <p>Vrsta plaćanja:  {{ value.payment.name }} </p>
+
+  Srdačan pozdrav,<br><br><br>
+
+  Čoko Moko PR<br>
+  Strahinja Budimović<br>
+  Masarikova 63<br>
+  Kovačica<br>
+  0638245893<br>
+{% endfor %}
+</body>
+</html>

@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Čoko Moko | Registracija{% endblock %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link rel="stylesheet" type="text/css" href="{{asset('/css/login.css')}}">
+{% endblock %}
+
+{% block body %}
+
+{% block navBar %}
+
+ {{ include('nav_bar.html.twig') }}
+    
+{% endblock %}
+<br><br><br>
+<div class="container mt-5 mb-5">
+    <div class="row d-flex align-items-center justify-content-center">
+        <div class="col-md-6">
+            <div class="card px-5 py-5">
+                <form action="{{ path('registration_handle') }}" method="POST" class="registration-form">
+                    <h5 class="mt-3">Registrujte se</h5> 
+                    <small class="mt-2 text-muted">
+                    Možete se registrovati na naš web site kako bi redovno dobijali informacije i imali druge pogodnosti kao registrovan korisnik.
+                    </small>
+                    <div class="form-input"> 
+                        <i class="icon icon-user"></i> 
+                        <input type="text" class="form-control" name="name" placeholder="Unesite vaše puno ime" required> 
+                    </div>
+                    <div class="form-input"> 
+                        <i class="icon icon-home"></i> 
+                        <input type="text" class="form-control" name="adress" placeholder="Unesite vašu adresu" required> 
+                    </div>
+                    <div class="form-input"> 
+                        <i class="icon icon-phone"></i> 
+                        <input type="tel" class="form-control" name="phone" placeholder="Unesite vaš broj telefona" required> 
+                    </div>
+                    <div class="form-input">
+                        <i class="icon icon-envelope"></i>
+                        <input type="email" class="form-control" name="email" placeholder="Unesite email" required>
+                    </div>
+                    <div class="form-input">
+                        <i class="icon icon-lock"></i>
+                        <input type="password" class="form-control" name="password" placeholder="Unesite lozinku" required>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked> 
+                        <label class="form-check-label" for="flexCheckChecked"> Slažem se sa uslovima korišćenja</label> 
+                    </div> 
+                    <button type="submit" class="btn btn-primary mt-4 signup">Registracija</button>
+                    <div class="text-center mt-4">
+                     <span>Imate nalog?</span>
+                     <a href="{{ url('login') }}" class="text-decoration-none">Uloguj se</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block footer %}
+
+ {{ include('footer.html.twig') }}
+
+{% endblock %}
+
+{% endblock %}

@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+{% for value in orders %}
+  <title>Faktura {{ value.id}}</title>
+
+  <style type="text/css">
+      * {
+      font-family: "DejaVu Sans", sans-serif;
+  
+      }
+      table{
+          font-size: x-small;
+      }
+      tfoot tr td{
+          font-weight: bold;
+          font-size: x-small;
+      }
+      .lightblue {
+          background-color: lightblue
+      }
+  </style>
+  </head>
+
+  <body>
+  <table width="100%">
+    <tr>
+      <td>
+        <a href="http://kafina.rs">
+        <img src="{{ absolute_url(asset('/images/kafina-logo.png')) }}" alt="" width="120"/>
+        </a>
+      </td>
+    </tr>
+    <tr>
+      <td align="left">
+        <h3>PR Čoko Moko</h3>
+        <p>
+        Strahinja Budimović<br>
+        Masarikova 63<br>
+        Kovačica<br>
+        0638245893<br>
+        </p>
+      </td>
+      
+      <td align="right">
+        <h3>Kupac </h3>
+        <p>
+        {{ app.user.name }}<br>
+        {{ app.user.adress }}<br>
+        {{ value.city }}<br>
+        {{ app.user.phone }}<br>
+        </p>
+      </td>
+    </tr>
+  </table>
+    <h3 align="center">FAKTURA {{ value.id }}</h3>
+  <table width="100%">
+    <tr>
+      <td><strong>Od:</strong> cokomoko@gmail.com</td>
+      <td align="right"><strong>Za:</strong> {{ app.user.email }}</td>
+      </tr>
+  </table>
+  <br/>
+
+  <table width="100%">
+    <thead style="background-color: lightblue;">
+      <tr>
+        <th>#</th>
+        <th>Proizvod</th>
+        <th>Opcije</th>
+        <th>Kolicina</th>
+        <th>Jedinstvena cena/din</th>
+        <th>Ukupno din</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for value2 in value.ordersProducts %}
+        <tr>
+          <th scope="row">{{ value2.articles.id }}</th>
+            <td>{{ value2.articles.title }}</td>
+            <td align="right">{{ value2.size }}</td>
+            <td align="right">{{ value2.quantity }}</td>
+            <td align="right">{{ value2.articles.price }}.00 din</td>
+            <td align="right">{{ value2.articles.price * value2.quantity }}.00 din</td>
+        </tr>
+    </tbody>
+      {% endfor %}
+  <tfoot>
+      <tr>
+        <td colspan="4"></td>
+        <td align="right">Ukupno proizvodi</td>
+        <td align="right">{{  value.total  }}.00 din</td>
+      </tr>
+      <tr>
+        <td colspan="4"></td>
+        <td align="right">Dostava</td>
+        <td align="right">200.00 din</td>
+        </tr>
+      <tr>
+        <td colspan="4"></td>
+        <td align="right">Ukupno za paćanje:</td>
+        <td align="right" class="lightblue">{{ value.total + 200 }}.00 din</td>
+      </tr>
+    </tfoot>
+  </table>
+  <br><br><br><br><br>
+  <p>Ovaj dokument je validan bez pečata i potpisa.Poreski obveznik nije u sistemu PDV-a.</p>
+{% endfor %}
+</body>
+</html>

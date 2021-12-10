@@ -1,0 +1,37 @@
+{% extends '/admin/admin.html.twig' %}
+
+{% block title %}Admin Panel | Dodaj O nama{% endblock %}
+
+{% block body %}
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Add new about page</h6>
+    </div>
+    <div class="card-body">
+        <form action="{{route('admin.about.store')}}" method="POST" enctype="multipart/form-data">
+        @csrf
+
+        <div class="form-group">
+            <label for="title">Title:</label>
+            <input id="title" class="form-control {{ $errors->has('title') ?'is-invalid':''}}" type="text"  
+            name="title" value="{{ old('title',optional($about_us ?? null)->title) }}">
+        </div>
+
+        <div class="form-group">
+            <label for="content">Content:</label>
+            <textarea rows="25" class="form-control {{ $errors->has('content') ?'is-invalid':''}}" id="content" type="text" 
+            name="content">{{ old('content',optional($about_us ?? null )->content) }}</textarea>
+        </div>
+
+        <div><input type="submit" class="btn btn-primary" value="Create"></div>
+     </form>
+    </div>
+</div>
+@if($errors->any())
+<div class="mt-2 mb-2">
+        @foreach ($errors->all() as $error)
+            <div class="alert alert-danger" role="alert">{{$error}}</div>
+        @endforeach
+</div>
+@endif
+{% endblock %}

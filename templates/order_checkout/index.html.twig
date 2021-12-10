@@ -1,0 +1,169 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Čoko Moko | Plaćanje{% endblock %}
+
+{% block body %}
+
+{% block navBar %}
+
+ {{ include('nav_bar.html.twig') }}
+
+{% endblock %}
+<section class="home-slider owl-carousel">
+    <div class="slider-item" style="background-image: url(../images/bg_3.jpg);" data-stellar-background-ratio="0.5">
+    <div class="overlay"></div>
+    	<div class="container">
+        	<div class="row slider-text justify-content-center align-items-center">
+            	<div class="col-md-7 col-sm-12 text-center ftco-animate">
+                    <h1 class="mb-3 mt-5 bread">Plaćanje</h1>
+                    <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Početna</a></span> <span>Plaćanje</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="ftco-section">
+    <div class="container">
+    	<div class="row">
+        	<div class="col-xl-12 ftco-animate">
+				<form action="{{ path('order_handle')}}" method="POST" class="billing-form ftco-bg-dark p-3 p-md-5">
+				{% set name = app.user.name|split(' ') %}
+					<h3 class="mb-4 billing-heading">Detalji plaćanja</h3>
+					
+					<div class="row align-items-end">
+						<div class="col-md-6">
+							<div class="form-group">
+								<label for="firstname">Ime</label>
+								<input type="text" class="form-control" name="firstname" placeholder="" value="{{ name[0] }}">
+							</div>
+						</div>
+
+						<div class="col-md-6">
+							<div class="form-group">
+								<label for="lastname">Prezime</label>
+								<input type="text" class="form-control" name="lastname" placeholder="" value="{{ name[1] }}">
+							</div>
+						</div>
+
+					<div class="w-100"></div>
+
+						<div class="col-md-12">
+							<div class="form-group">
+								<label for="country">Zemlja</label>
+								<div class="select-wrap">
+								<div class="icon"><span class="ion-ios-arrow-down"></span></div>
+								<select name="country" id="country" class="form-control">
+								{% for country in countries %}
+									<option value="{{ country.id }}" style="background:black;color:white;">{{ country.name }}</option>
+								{% endfor %}
+								</select>
+								</div>
+							</div>
+						</div>
+
+						<div class="w-100"></div>
+
+						<div class="col-md-6">
+							<div class="form-group">
+								<label for="streetaddress">Ulica i broj</label>
+								<input type="text" class="form-control" name="adress" placeholder="Unesite ime ulice i broj" value="{{app.user.adress}}">
+							</div>
+						</div>
+
+						<div class="col-md-6">
+							<div class="form-group">
+								<input type="text" class="form-control" name="nubmer_of_flat" placeholder="Broj stana,sprat: (opciono)">
+							</div>
+						</div>
+						<div class="w-100"></div>
+
+						<div class="col-md-6">
+							<div class="form-group">
+								<label for="towncity">Grad</label>
+								<input type="text" class="form-control" name="city" placeholder="">
+							</div>
+						</div>
+
+						<div class="col-md-6">
+							<div class="form-group">
+								<label for="postcodezip">Poštanski broj</label>
+								<input type="text" class="form-control" name="postal_code" placeholder="">
+							</div>
+						</div>
+						<div class="w-100"></div>
+
+						<div class="col-md-6">
+							<div class="form-group">
+								<label for="phone">Telefon</label>
+								<input type="text" class="form-control" placeholder="" name="phone" value="{{app.user.phone}}">
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label for="emailaddress">Email Adresa</label>
+								<input type="text" class="form-control" placeholder="" name="email" value="{{app.user.email}}">
+							</div>
+						</div>
+						<div class="w-100"></div>
+					</div>
+						{% set total = 0 %}
+	          			{% for value in cart %}
+							<input type="hidden" name="article_{{ value.article.id }}" value="{{ value.article.id }}"/>
+							{% set total = total + (value.article.price * value.quantity) %}
+						{% endfor %}
+				<div class="row mt-5 pt-3 d-flex">
+					<div class="col-md-6 d-flex">
+						<div class="cart-detail cart-total ftco-bg-dark p-3 p-md-4">
+							<h3 class="billing-heading mb-4">Korpa ukupno</h3>
+							<p class="d-flex">
+								<span>Ukupno proizvodi</span>
+								<span>{{ total }}.00 din</span>
+							</p>
+							<p class="d-flex">
+								<span>Dostava</span>
+								<span>200.00 din</span>
+							</p>
+							<hr>
+							<p class="d-flex total-price">
+								<span>Ukupno</span>
+								<span>{{ total + 200 }}.00 din</span>
+								<input type="hidden" name="total" value="{{ total }}"/>
+							</p>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="cart-detail ftco-bg-dark p-3 p-md-4">
+							<h3 class="billing-heading mb-4">Metod plaćanja</h3>
+							{% for payment in payments %}
+							<div class="form-group">
+								<div class="col-md-12">
+									<div class="radio">
+										<label><input type="radio" name="payment" class="mr-2" value="{{ payment.id }}"> {{ payment.name }}</label>
+									</div>
+								</div>
+							</div>
+							{% endfor %}
+							<div class="form-group">
+								<div class="col-md-12">
+									<div class="checkbox">
+										<label><input type="checkbox" value="" class="mr-2" required> Pročitao sam i prihvatam uslove korišćenja</label>
+									</div>
+								</div>
+							</div>
+						<button type="submit" class="btn btn-primary py-3 px-4">Potvrdi porudžbinu</button>
+						</div>
+					</div>
+					</form>
+				</div>
+          </div>
+        </div>
+    </div>
+</section>
+{% block footer %}
+
+ {{ include('footer.html.twig') }}
+ 
+{% endblock %}
+
+{% endblock %}

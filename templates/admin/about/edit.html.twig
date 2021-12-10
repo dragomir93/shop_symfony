@@ -1,0 +1,29 @@
+{% extends '/admin/admin.html.twig' %}
+
+{% block title %}Admin Panel | Izmeni O nama{% endblock %}
+
+{% block body %}
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Change about us</h6>
+    </div>
+    <div class="card-body">
+        <form action="{{ path('about_edit',{ 'id':about_us.id }) }}" method="POST" enctype="multipart/form-data">
+
+        <div class="form-group">
+            <label for="title">Title:</label>
+            <input id="title" class="form-control" type="text"  
+            name="title" value="{{ about_us.title }}">
+        </div>
+
+        <div class="form-group">
+            <label for="content">Content:</label>
+            <textarea rows="25" class="form-control" id="content" type="text" 
+            name="content">{{ about_us.content }}</textarea>
+        </div>
+
+        <div><input type="submit" class="btn btn-primary" value="Edit"></div>
+     </form>
+    </div>
+</div>
+{% endblock %}
