@@ -43,7 +43,7 @@ class AboutUs
     private $ourStory;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="text")
      */
     private $aboutUsText;
 

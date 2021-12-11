@@ -72,4 +72,64 @@ class ContactController extends AbstractController
         return $this->redirectToRoute("contact");
 
     }
+
+    /**
+     * @Route("/admin/contacts/edit/{id}", name="admin_contacts_edit")
+     */
+    public function edit($id): Response
+    {
+        $contacts = $this->em->getRepository(Contact::class)->findBy(['id'=>$id]);
+        
+        return $this->render('admin/contacts/edit.html.twig', [
+            'contacts' => $contacts[0],
+        ]);
+    }
+
+    /**
+     * @Route("/admin/contacts/update/{id}", name="admin_contacts_update")
+     */
+    public function update(Request $request): Response
+    {
+        $contact = $this->em->find(Contact::class,$request->attributes->get('id'));
+
+        $name = $request->request->get('name');
+        $contact->setName($name);
+
+        $email = $request->request->get('email');
+        $contact->setEmail($email);
+
+        $phone = $request->request->get('phone');
+        $contact->setPhone($phone);
+
+        $subject = $request->request->get('subject');
+        $contact->setSubject($subject);
+
+        $message = $request->request->get('message');
+        $contact->setMessage($message);
+
+        $date = new \DateTime("now");
+        $contact->setUpdatedAt($date);
+        $contact->setCreatedAt($date);
+
+        $this->em->persist($contact);
+        $this->em->flush();
+
+        $this->addFlash('sucess_admin', 'Upešno ste izmenili stranicu kontakta!');
+            
+        return $this->redirectToRoute("admin_contacts");
+    }
+
+    /**
+     * @Route("/admin/contacts/delete/{id}", name="admin_contacts_delete")
+     */
+    public function delete($id): Response
+    {
+        $contacts = $this->em->getRepository(Contact::class)->findBy(['id'=>$id]);
+        $this->em->remove($contacts[0]);
+        $this->em->flush();
+
+        $this->addFlash('sucess_admin', 'Upešno ste se obrisali željeni red!');
+
+        return $this->redirectToRoute("admin_contacts");
+    }
 }

@@ -14,10 +14,13 @@
       <div class="slider-item" style="background-image: url(images/bg_1.jpg);">
       	<div class="overlay"></div>
         <div class="container">
-        
           <div class="row slider-text justify-content-center align-items-center" data-scrollax-parent="true">
-
             <div class="col-md-8 col-sm-12 text-center ftco-animate">
+            {% for message in app.flashes('error') %}
+              <div class="alert alert-danger" role="alert">
+                  {{ message }}
+              </div>
+            {% endfor %}
             	<span class="subheading">Dobrodošli</span>
               <h1 class="mb-4">Probajte najbolju kafu u Srbiji</h1>
               <p class="mb-4 mb-md-5">U nastavku možete pogledati našu ponudu i poručiti neki od proizvoda</p>

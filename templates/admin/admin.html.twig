@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Admin panel - {% block title %}{% endblock %}</title>
+    <title>Admin panel | {% block title %}{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="{{ asset('/admin/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
@@ -43,6 +43,12 @@
             <div class="container-fluid">
              	{% for message in app.flashes('sucess_admin') %}
 				    <div class="alert alert-success" role="alert">
+                	    {{ message }}
+            		</div>
+            	{% endfor %}
+
+                {% for message in app.flashes('error_admin') %}
+				    <div class="alert alert-danger" role="alert">
                 	    {{ message }}
             		</div>
             	{% endfor %}

@@ -39,7 +39,7 @@ class ArticleController extends AbstractController
         ]);
     }
 
-        /**
+     /**
      * @Route("/article/{id}/", name="article_id")
      */
     public function getById($id): Response

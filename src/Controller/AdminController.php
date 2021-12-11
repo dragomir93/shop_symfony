@@ -46,9 +46,22 @@ class AdminController extends AbstractController
      */
     public function about(): Response{
         $about_us = $this->em->getRepository(AboutUs::class)->findLimitedResults(1);
-        
+        if($about_us != null){
+            $about_us = $about_us[0];
+        }
         return $this->render('admin/about/index.html.twig', [
-            'about_us' => $about_us[0],
+            'about_us' => $about_us,
+        ]);
+    }
+
+     /**
+     * @Route("/admin_contacts", name="admin_contacts")
+     */
+    public function contacts(): Response{
+        $contacts = $this->em->getRepository(Contact::class)->findAll();
+
+        return $this->render('admin/contacts/index.html.twig', [
+            'contacts' => $contacts,
         ]);
     }
 }

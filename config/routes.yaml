@@ -74,14 +74,38 @@ admin_about_us:
     path: /admin_about_us
     controller: App\Controller\AdminController::about
 
-about_add:
-    path: /about_add
+admin_contact:
+    path: /admin/contacts
+    controller: App\Controller\AdminController::contacts
+
+admin_about_add:
+    path: /admin/about/add
     controller: App\Controller\AboutUsController::add
 
-about_edit:
-    path: /about/edit/{id}
+admin_about_store:
+    path: /admin/about/store/
+    controller: App\Controller\AboutUsController::store
+
+admin_about_edit:
+    path: /admin/about/edit/{id}
     controller: App\Controller\AboutUsController::edit
 
-about_delete:
-    path: /about/delete/{id}
+admin_about_update:
+    path: /admin/about/update/{$id}
+    controller: App\Controller\AboutUsController::update
+
+admin_about_delete:
+    path: /admin/about/delete/{id}
     controller: App\Controller\AboutUsController::delete
+
+admin_contact_edit:
+    path: /admin/contact/edit/{id}
+    controller: App\Controller\ContactController::edit
+
+admin_contact_update:
+    path: /admin/contact/update/{$id}
+    controller: App\Controller\ContactController::update
+
+admin_contact_delete:
+    path: /admin/contact/delete/{id}
+    controller: App\Controller\ContactController::delete

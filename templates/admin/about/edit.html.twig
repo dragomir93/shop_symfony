@@ -1,24 +1,36 @@
 {% extends '/admin/admin.html.twig' %}
 
-{% block title %}Admin Panel | Izmeni O nama{% endblock %}
+{% block title %} Izmeni O nama {% endblock %}
 
 {% block body %}
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Change about us</h6>
+        <h6 class="m-0 font-weight-bold text-primary">Promeni o nama</h6>
     </div>
     <div class="card-body">
-        <form action="{{ path('about_edit',{ 'id':about_us.id }) }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ path('admin_about_update',{ 'id':about_us.id }) }}" method="POST" enctype="multipart/form-data">
 
         <div class="form-group">
-            <label for="title">Title:</label>
+            <label for="title">Naslov:</label>
             <input id="title" class="form-control" type="text"  
             name="title" value="{{ about_us.title }}">
         </div>
 
+         <div class="form-group">
+            <label for="content">Naša priča:</label>
+            <textarea rows="5" class="form-control" id="content" type="text" 
+            name="our_story">{{ about_us.getOurStory() }}</textarea>
+        </div>
+
         <div class="form-group">
-            <label for="content">Content:</label>
-            <textarea rows="25" class="form-control" id="content" type="text" 
+            <label for="content">O nama tekst:</label>
+            <textarea rows="5" class="form-control" id="content" type="text" 
+            name="about_us_text">{{ about_us.getAboutUsText() }}</textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="content">Sadržaj:</label>
+            <textarea rows="5" class="form-control" id="content" type="text" 
             name="content">{{ about_us.content }}</textarea>
         </div>
 

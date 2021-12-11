@@ -3,7 +3,7 @@
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ path('admin') }}">
         <div class="sidebar-brand-icon">
          <i class="fas fa-user"></i>
         </div>
@@ -15,7 +15,7 @@
 
     <!-- Nav Item - Dashboard -->
         <li class="nav-item active">
-            <a class="nav-link" href="">
+            <a class="nav-link" href="{{ path('admin') }}">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Dashboard</span>
             </a>
@@ -49,7 +49,7 @@
         <hr class="sidebar-divider my-0">
         
         <li class="nav-item active">
-            <a class="nav-link" href="">
+            <a class="nav-link" href="{{ path('admin_contacts') }}">
                 <i class="fas fa-list"></i>
                 <span>Contact</span>
             </a>
