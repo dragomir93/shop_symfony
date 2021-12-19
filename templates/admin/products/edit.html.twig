@@ -1,0 +1,71 @@
+{% extends '/admin/admin.html.twig' %}
+
+{% block title %} Proizvodi {% endblock %}
+
+{% block body %}
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-danger">Edit product</h6>
+    </div>
+    <div class="card-body">
+        <form action="{{ path('admin_article_update',{'id':articles.id }) }}" method="POST" enctype="multipart/form-data">
+
+        <div class="form-group">
+            <label for="title">Title:</label>
+            <input id="title" class="form-control" type="text"  
+            name="title"  value="{{ articles.title }}">
+        </div>
+
+        <div class="form-group">
+            <label for="description">Description:</label>
+            <textarea class="form-control" id="description" type="text" 
+            name="description">{{ articles.description }}</textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="extra_description">Extra description:</label>
+            <textarea class="form-control" id="description" id="extra_description" type="text" 
+            name="extra_description">{{ articles.getExtraDescription }}</textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="characteristics">Characteristics:</label>
+            <textarea class="form-control" id="characteristics" type="text"
+             name="characteristics">{{ articles.characteristics }}</textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="price">Price:</label>
+            <input id="price" class="form-control" type="number"
+             name="price" value="{{ articles.price }}">
+        </div>
+
+        <div class="form-group">
+            <label for="promotion">Promotion:</label>
+            <select id="promotion" class="form-control" name="promotion">
+            
+                {% if (articles.promotion == 0) %}
+                    <option value="0" selected> Ne </option> 
+                    <option value="1"> Da </option> 
+                {% else  %}
+                    <option value="1" selected> Da </option> 
+                    <option value="0"> Ne </option>  
+                {% endif %}
+            </select>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Trenutna slika:</label>
+            <img src="{{ absolute_url(asset(articles.images.path )) }}" alt="picture" class="form-control-file" style="width:5%;heigth:5%;"> 
+        </div>
+
+        <div class="form-group">
+            <label>Dodaj novu sliku:</label>
+            <input id="title" class="form-control-file" type="file"  name="thumbnail" value="{{ absolute_url(asset(articles.images.path )) }}">  
+        </div>
+        <div><input type="submit" class="btn btn-danger" value="Edit"></div>
+     </form>
+    </div>
+</div>
+{% endblock %}

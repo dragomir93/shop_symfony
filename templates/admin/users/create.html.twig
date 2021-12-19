@@ -1,0 +1,55 @@
+{% extends '/admin/admin.html.twig' %}
+
+{% block title %} Dodaj Korisnika {% endblock %}
+
+{% block body %}
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-success">Dodaj novog korisnika</h6>
+    </div>
+    <div class="card-body">
+        <form action="{{ path('admin_users_store') }}" method="POST" enctype="multipart/form-data">
+
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input id="name" class="form-control" type="text"  
+            name="name" value="">
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input id="email" class="form-control" type="email"
+             name="email" value="">
+        </div>
+
+        <div class="form-group">
+            <label for="adress">Adress:</label>
+            <input id="adress" class="form-control" type="text"
+             name="adress" value="">
+        </div>
+
+         <div class="form-group">
+            <label for="phone">Phone:</label>
+            <input id="phone" class="form-control" type="text"
+             name="phone" value="">
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input id="password" class="form-control" type="password"
+             name="password" value="">
+        </div>
+
+        <div class="form-group">
+            <label for="is_admin">Admin:</label>
+            <select id="is_admin" class="form-control" name="is_admin">
+                <option value="1">Yes</option>
+                <option value="0">No</option>
+            </select>
+        </div>
+
+        <div><input type="submit" class="btn btn-success" value="Create"></div>
+     </form>
+    </div>
+</div>
+{% endblock %}

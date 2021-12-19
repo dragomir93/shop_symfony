@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\Security;
@@ -96,4 +97,161 @@ class UserController extends AbstractController
     {
        
     }
+
+     /**
+     * @Route("/admin/users/add", name="admin_users_add")
+     */
+    public function add(): Response
+    {
+        return $this->render('admin/users/create.html.twig');
+    }
+
+    /**
+     * @Route("/admin/users/store", name="admin_users_store")
+     */
+    public function store(Request $request, UserPasswordHasherInterface $passwordHasher): Response
+    {
+        $user = new User();
+
+        $name = $request->request->get('name');
+        $user->setName($name);
+
+        $email = $request->request->get('email');
+        $user->setEmail($email);
+
+        $adress = $request->request->get('adress');
+        $user->setAdress($adress);
+
+        $phone = $request->request->get('phone');
+        $user->setPhone($phone);
+
+        $password = $request->request->get('password');
+        $hashedPassword = $passwordHasher->hashPassword($user,$password);
+        $user->setPassword($hashedPassword);
+
+        $user->setActive(1);
+
+        $isAdmin = $request->request->get('is_admin');
+        $user->setIsAdmin($isAdmin);
+
+        if($isAdmin){
+            $user->setRoles(['ROLE_ADMIN']);
+        }
+
+        $date = new \DateTime("now");
+        $user->setUpdatedAt($date);
+
+        $user->setCreatedAt($date);
+
+        $this->em->persist($user);
+        $this->em->flush();
+
+        $this->addFlash('sucess_admin', 'Upešno ste dodali korisnika!');
+
+        return $this->redirectToRoute("admin_show_users");
+    }
+
+     /**
+     * @Route("/admin/users/edit/{id}", name="admin_users_edit")
+     */
+    public function edit($id): Response
+    {
+        $user = $this->em->getRepository(User::class)->findBy(['id'=>$id]);
+        
+        return $this->render('admin/users/edit.html.twig', [
+            'user' => $user[0],
+        ]);
+    }
+
+    /**
+     * @Route("/admin/users/update/{id}", name="admin_users_update")
+     */
+    public function update(Request $request): Response
+    {
+        $user = $this->em->getRepository(User::class)->findBy(['id'=>$request->query->get('id')]);
+        $user = $user[0];
+
+        $name = $request->request->get('name');
+        $user->setName($name);
+
+        $email = $request->request->get('email');
+        $user->setEmail($email);
+
+        $adress = $request->request->get('adress');
+        $user->setAdress($adress);
+
+        $phone = $request->request->get('phone');
+        $user->setPhone($phone);
+
+        $user->setActive(1);
+
+        $isAdmin = $request->request->get('is_admin');
+        $user->setIsAdmin($isAdmin);
+
+        if($isAdmin){
+            $user->setRoles(['ROLE_ADMIN']);
+        }
+
+        $date = new \DateTime("now");
+        $user->setUpdatedAt($date);
+
+        $user->setCreatedAt($date);
+
+        $this->em->persist($user);
+        $this->em->flush();
+
+        $this->addFlash('sucess_admin', 'Upešno ste izmenili korisnika!');
+
+        return $this->redirectToRoute("admin_show_users");
+    }
+
+    /**
+     * @Route("/admin/users/delete/{id}", name="admin_users_delete")
+     */
+    public function delete($id): Response
+    {
+        $users = $this->em->getRepository(User::class)->findBy(['id'=>$id]);
+        $this->em->remove($users[0]);
+        $this->em->flush();
+
+        $this->addFlash('sucess_admin', 'Upešno ste se obrisali željeni red!');
+
+        return $this->redirectToRoute("admin_show_users");
+    }
+
+    /**
+     * @Route("/admin/users/{id}/change_password", name="admin_users_change_password")
+     */
+    public function changePassword($id): Response
+    {
+        $users = $this->em->getRepository(User::class)->findBy(['id'=>$id]);
+        
+        return $this->render('admin/users/change_password.html.twig', [
+            'users' => $users[0],
+        ]);
+    }
+
+    /**
+     * @Route("/admin/users/{id}/password_handler", name="admin_users_password_handler")
+     */
+    public function passwordHandler($id,Request $request,UserPasswordHasherInterface $passwordHasher): Response
+    {
+        $users = $this->em->getRepository(User::class)->findBy(['id'=>$id]);
+        $users = $users[0];
+
+        $password = $request->request->get('new_password');
+        
+        $hashedPassword = $passwordHasher->hashPassword($users,$password);
+        $users->setPassword($hashedPassword);
+        
+        $this->em->persist($users);
+        $this->em->flush();
+
+        $this->addFlash('sucess_admin', 'Upešno ste promenili password!');
+        
+        return $this->redirectToRoute("admin_show_users");
+
+    }
+
+
 }

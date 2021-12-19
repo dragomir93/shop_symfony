@@ -1,0 +1,54 @@
+{% extends '/admin/admin.html.twig' %}
+
+{% block title %} Izmeni Korisnika {% endblock %}
+
+{% block body %}
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-success"> Izmeni korisnika</h6>
+    </div>
+    <div class="card-body">
+        <form action="{{ path('admin_users_update',{'id':user.id}) }}" method="POST" enctype="multipart/form-data">
+
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input id="name" class="form-control" type="text"  
+            name="name" value="{{ user.name }}">
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input id="email" class="form-control" type="email"
+             name="email" value="{{ user.email }}">
+        </div>
+
+        <div class="form-group">
+            <label for="adress">Adress:</label>
+            <input id="adress" class="form-control" type="text"
+             name="adress" value="{{ user.adress }}">
+        </div>
+
+         <div class="form-group">
+            <label for="phone">Phone:</label>
+            <input id="phone" class="form-control" type="text"
+             name="phone" value="{{ user.phone }}">
+        </div>
+
+        <div class="form-group">
+            <label for="is_admin">Admin:</label>
+            <select id="is_admin" class="form-control" name="is_admin">
+                {% if (user.isAdmin == false) %}
+                    <option value="0" selected> Ne </option> 
+                    <option value="1"> Da </option> 
+                {% else  %}
+                    <option value="1" selected> Da </option> 
+                    <option value="0"> Ne </option>  
+                {% endif %}
+            </select>
+        </div>
+
+        <div><input type="submit" class="btn btn-success" value="Edit"></div>
+     </form>
+    </div>
+</div>
+{% endblock %}

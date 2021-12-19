@@ -30,7 +30,7 @@
 				{{ 0 }}
 			  {% endif %}
 			  </small></span></a></li>
-			  	{% if (app.user.getIsAdmin() is defined) %}
+			  	{% if (app.user.getIsAdmin() is defined and app.user.getIsAdmin() != false) %}
 			  	 	<li class="nav-item {{ (url == 'admin') ? 'active' : '' }}"><a href="{{ url('admin') }}" class="nav-link">Admin panel</a></li>
 			   {% endif %}
 	        </ul>

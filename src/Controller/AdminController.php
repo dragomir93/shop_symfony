@@ -64,4 +64,24 @@ class AdminController extends AbstractController
             'contacts' => $contacts,
         ]);
     }
+
+     /**
+     * @Route("/showArticles", name="show_articles")
+     */
+    public function showArticles(): Response{
+        $articles = $this->em->getRepository(Articles::class)->findAll();
+        return $this->render('admin/products/index.html.twig',[
+            'articles'=>$articles,
+        ]);
+    }
+
+         /**
+     * @Route("/admin/showUsers", name="admin_show_users")
+     */
+    public function showUsers(): Response{
+        $users = $this->em->getRepository(User::class)->findAll();
+        return $this->render('admin/users/index.html.twig',[
+            'users'=>$users,
+        ]);
+    }
 }

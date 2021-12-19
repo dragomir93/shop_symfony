@@ -1,0 +1,51 @@
+{% extends '/admin/admin.html.twig' %}
+
+{% block title %} Proizvodi {% endblock %}
+
+{% block body %}
+ <!-- Page Heading -->
+ <h1 class="h3 mb-2 text-gray-800">Proizvodi</h1>
+ <!-- DataTales Example -->
+ <div class="card shadow mb-4">
+     <div class="card-body">
+         <a href="{{ path('admin_article_add') }}" class="btn btn-danger m-2">Nov proizvod</a>
+         <div class="table-responsive">
+             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                 <thead>
+                     <tr>
+                         <th>ID</th>
+                         <th>Naslov</th>
+                         <th>Opis</th>
+                         <th>Ekstra opis</th>
+                         <th>Karakteristike</th>
+                         <th>Cena</th>
+                         <th>Slika</th>
+                         <th>Na promociji</th>
+                         <th>Izmeni/Obrisi</th>
+                     </tr>
+                 </thead>
+                 <tbody>
+                     {% for article in articles %}
+                     <tr>
+                         <td>{{ article.id }}</td>
+                         <td>{{ article.title }}</td>
+                         <td>{{ article.description }}</td>
+                         <td>{{ article.getExtraDescription }}</td>
+                         <td>{{ article.characteristics }}</td>
+                         <td>{{ article.price }}</td>
+                         <td>{{ article.images.path }}</td>
+                         <td>{% if (article.promotion == '0') %}{{ "Ne" }} {% else %} {{ "Da" }} {% endif %} </td>
+                         <td> <a href="{{ path('admin_article_edit',{'id': article.id}) }}"><i class="fas fa-edit fa-sm fa-fw mr-2" style="color:red"></i></a>
+                            <form class="d-inline" action="{{ path('admin_article_delete',{'id': article.id}) }}" method="POST" id="delete-form">
+                                <button type="submit"  class="btn"><i class="fas fa-trash fa-sm fa-fw mr-2" style="color:red"></i></button>
+                            </form>
+                         </td>
+                     </tr>
+                     {% endfor %}
+                    
+                 </tbody>
+             </table>
+         </div>
+     </div>
+ </div>
+{% endblock %}

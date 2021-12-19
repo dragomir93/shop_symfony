@@ -109,3 +109,59 @@ admin_contact_update:
 admin_contact_delete:
     path: /admin/contact/delete/{id}
     controller: App\Controller\ContactController::delete
+
+admin_articles:
+    path: /showArticles
+    controller: App\Controller\AdminController::showArticles 
+
+admin_articles_add:
+    path: /admin/articles/add
+    controller: App\Controller\ArticleController::add
+
+admin_articles_store:
+    path: /admin/articles/store/
+    controller: App\Controller\ArticleController::store
+
+admin_articles_edit:
+    path: /admin/articles/edit/{id}
+    controller: App\Controller\ArticleController::edit
+
+admin_articles_update:
+    path: /admin/articles/update/{$id}
+    controller: App\Controller\ArticleController::update
+
+admin_articles_delete:
+    path: /admin/articles/delete/{id}
+    controller: App\Controller\ArticleController::delete
+
+admin_users:
+    path: /admin/showUsers
+    controller: App\Controller\AdminController::showUsers
+
+admin_users_add:
+    path: /admin/users/add
+    controller: App\Controller\UserController::add
+
+admin_users_store:
+    path: /admin/users/store/
+    controller: App\Controller\UserController::store
+
+admin_users_edit:
+    path: /admin/users/edit/{id}
+    controller: App\Controller\UserController::edit
+
+admin_users_update:
+    path: /admin/users/update/{$id}
+    controller: App\Controller\UserController::update
+
+admin_users_delete:
+    path: /admin/users/delete/{id}
+    controller: App\Controller\UserController::delete
+
+admin_users_change_password:
+    path: /admin/users/{id}/change_password
+    controller: App\Controller\UserController::changePassword
+
+admin_users_password_handler:
+    path: /admin/users/{id}/password_handler/
+    controller: App\Controller\UserController::passwordHandler
