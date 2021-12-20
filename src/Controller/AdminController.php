@@ -23,8 +23,8 @@ class AdminController extends AbstractController
     }
 
     /**
-     * @Route("/admin", name="admin")
-     */
+    * @Route("/admin", name="admin")
+    */
     public function index(): Response
     {
         $articles = $this->em->getRepository(Articles::class)->findAll();
@@ -42,8 +42,8 @@ class AdminController extends AbstractController
     }
 
     /**
-     * @Route("/admin_about_us", name="admin_about_us")
-     */
+    * @Route("/admin_about_us", name="admin_about_us")
+    */
     public function about(): Response{
         $about_us = $this->em->getRepository(AboutUs::class)->findLimitedResults(1);
         if($about_us != null){
@@ -54,9 +54,9 @@ class AdminController extends AbstractController
         ]);
     }
 
-     /**
-     * @Route("/admin_contacts", name="admin_contacts")
-     */
+    /**
+    * @Route("/admin_contacts", name="admin_contacts")
+    */
     public function contacts(): Response{
         $contacts = $this->em->getRepository(Contact::class)->findAll();
 
@@ -65,9 +65,9 @@ class AdminController extends AbstractController
         ]);
     }
 
-     /**
-     * @Route("/showArticles", name="show_articles")
-     */
+    /**
+    * @Route("/showArticles", name="show_articles")
+    */
     public function showArticles(): Response{
         $articles = $this->em->getRepository(Articles::class)->findAll();
         return $this->render('admin/products/index.html.twig',[
@@ -75,13 +75,23 @@ class AdminController extends AbstractController
         ]);
     }
 
-         /**
-     * @Route("/admin/showUsers", name="admin_show_users")
-     */
+    /**
+    * @Route("/admin/showUsers", name="admin_show_users")
+    */
     public function showUsers(): Response{
         $users = $this->em->getRepository(User::class)->findAll();
         return $this->render('admin/users/index.html.twig',[
             'users'=>$users,
+        ]);
+    }
+
+    /**
+    * @Route("/admin/show/orders", name="admin_show_orders")
+    */
+    public function showOrders(): Response{
+        $orders = $this->em->getRepository(Orders::class)->findAll();
+        return $this->render('admin/orders/index.html.twig',[
+            'orders'=>$orders,
         ]);
     }
 }

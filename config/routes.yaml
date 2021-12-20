@@ -165,3 +165,19 @@ admin_users_change_password:
 admin_users_password_handler:
     path: /admin/users/{id}/password_handler/
     controller: App\Controller\UserController::passwordHandler
+
+admin_orders:
+    path: /admin/show/orders
+    controller: App\Controller\AdminController::showOrders
+
+admin_orders_edit:
+    path: /admin/orders/edit/{id}
+    controller: App\Controller\OrderCheckoutController::edit
+
+admin_orders_update:
+    path: /admin/orders/update/{$id}
+    controller: App\Controller\OrderCheckoutController::update
+
+admin_orders_delete:
+    path: /admin/orders/delete/{id}
+    controller: App\Controller\OrderCheckoutController::delete

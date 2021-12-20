@@ -144,10 +144,10 @@ class OrderCheckoutController extends AbstractController
         date_default_timezone_set("Europe/Belgrade");
 
         $email = (new TemplatedEmail())
-        ->from(new Address('cokomoko@gmail.com','Coko Moko'))
+        ->from(new Address('cokomoko.sb@gmail.com','Coko Moko'))
         ->to(new Address($orders[0]->getUser()->getEmail(),$orders[0]->getUser()->getName()))
-        ->bcc('cokomoko@gmail.com')
-        ->replyTo('cokomoko@gmail.com')
+        ->bcc('cokomoko.sb@gmail.com')
+        ->replyTo('cokomoko.sb@gmail.com')
         ->subject('COKO MOKO- Porudžbina broj:'.$orders[0]->getId())
         ->htmlTemplate('email/index.html.twig')
         ->context([
