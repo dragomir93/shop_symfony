@@ -15,36 +15,39 @@ class AboutUsController extends AbstractController
 {
     protected $em;
     
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager,Security $security)
     {
         $this->em = $entityManager;
+        $this->security = $security;
     }
 
     /**
-     * @Route("/about/us", name="about_us")
-     */
-    public function index(EntityManagerInterface $entityManager,Security $security): Response
+    * @Route("/about/us", name="about_us")
+    */
+    public function index(): Response
     {
-        $about_us = $entityManager->getRepository(AboutUs::class)->findAll();
-        if($about_us == null) {
-        $this->addFlash('error', "Ne možete videti stranicu O nama!Greška!");
-        return $this->redirectToRoute("home");
+        $about_us = $this->em->getRepository(AboutUs::class)->findAll();
+
+        if ($about_us == null) {
+            $this->addFlash('error', "Ne možete videti stranicu O nama!Greška!");
+            return $this->redirectToRoute("home");
         }
+
         $title = $about_us[0]->getTitle();
 
-        $cart = new CartService($entityManager,$security);
+        $cart = new CartService($this->em,$this->security);
 
         return $this->render('about_us/index.html.twig', [
             'url'           => 'about_us',
             'title'         => $title,
             'about_us'      => $about_us,
-            'cart_counter'  => $cart->getCartCounter()
+            'cart_counter'  => $cart->getCartCounter(),
         ]);
     }
 
     /**
-     * @Route("/admin/about/add", name="admin_about_add")
-     */
+    * @Route("/admin/about/add", name="admin_about_add")
+    */
     public function add(): Response
     {
         $about_us = $this->em->getRepository(AboutUs::class)->findAll();
@@ -58,8 +61,8 @@ class AboutUsController extends AbstractController
     }
 
     /**
-     * @Route("/admin/about/store", name="admin_about_store")
-     */
+    * @Route("/admin/about/store", name="admin_about_store")
+    */
     public function store(Request $request): Response
     {
         $about = new AboutUs(); 
@@ -89,8 +92,8 @@ class AboutUsController extends AbstractController
     }
 
     /**
-     * @Route("/admin/about/edit/{id}", name="admin_about_edit")
-     */
+    * @Route("/admin/about/edit/{id}", name="admin_about_edit")
+    */
     public function edit($id): Response
     {
         $about_us = $this->em->getRepository(AboutUs::class)->findBy(['id'=>$id]);
@@ -101,8 +104,8 @@ class AboutUsController extends AbstractController
     }
 
     /**
-     * @Route("/admin/about/update/{id}", name="admin_about_update")
-     */
+    * @Route("/admin/about/update/{id}", name="admin_about_update")
+    */
     public function update(Request $request): Response
     {
         $about = $this->em->find(AboutUs::class,$request->query->get('id'));
@@ -132,8 +135,8 @@ class AboutUsController extends AbstractController
     }
 
     /**
-     * @Route("/admin/about/delete/{id}", name="admin_about_delete")
-     */
+    * @Route("/admin/about/delete/{id}", name="admin_about_delete")
+    */
     public function delete($id): Response
     {
         $about = $this->em->getRepository(AboutUs::class)->findBy(['id'=>$id]);

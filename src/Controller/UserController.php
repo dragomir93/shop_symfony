@@ -26,22 +26,22 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/login", name="login")
-     */
+    * @Route("/login", name="login")
+    */
     public function login(): Response
     {
         $cart_counter = new CartService($this->em,$this->security);
 
         return $this->render('user/index.html.twig', [
             'url' => 'login',
-            'cart_counter'  => $cart_counter->getCartCounter()
+            'cart_counter'  => $cart_counter->getCartCounter(),
         ]);
         
     }
 
     /**
-     * @Route("/registration", name="registration")
-     */
+    * @Route("/registration", name="registration")
+    */
     public function registration(): Response
     {
         return $this->render('user/registration.html.twig', [
@@ -50,8 +50,8 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/registration/handle", name="registration_handle")
-     */
+    * @Route("/registration/handle", name="registration_handle")
+    */
     public function handle(Request $request,UserPasswordEncoderInterface $encoder)
     {
         $user = new User();
@@ -83,32 +83,30 @@ class UserController extends AbstractController
         $this->em->persist($user);
         $this->em->flush();
 
-        
         $this->addFlash('success_login', 'Upešno ste se registrovali! Možete se ulogovati.');
         
         return $this->redirectToRoute("login");
-     
     }
 
     /**
-     * @Route("/logout", name="app_logout", methods={"GET"})
-     */
+    * @Route("/logout", name="app_logout", methods={"GET"})
+    */
     public function logout(): void
     {
        
     }
 
-     /**
-     * @Route("/admin/users/add", name="admin_users_add")
-     */
+    /**
+    * @Route("/admin/users/add", name="admin_users_add")
+    */
     public function add(): Response
     {
         return $this->render('admin/users/create.html.twig');
     }
 
     /**
-     * @Route("/admin/users/store", name="admin_users_store")
-     */
+    * @Route("/admin/users/store", name="admin_users_store")
+    */
     public function store(Request $request, UserPasswordHasherInterface $passwordHasher): Response
     {
         $user = new User();
@@ -134,7 +132,7 @@ class UserController extends AbstractController
         $isAdmin = $request->request->get('is_admin');
         $user->setIsAdmin($isAdmin);
 
-        if($isAdmin){
+        if ($isAdmin) {
             $user->setRoles(['ROLE_ADMIN']);
         }
 
@@ -151,9 +149,9 @@ class UserController extends AbstractController
         return $this->redirectToRoute("admin_show_users");
     }
 
-     /**
-     * @Route("/admin/users/edit/{id}", name="admin_users_edit")
-     */
+    /**
+    * @Route("/admin/users/edit/{id}", name="admin_users_edit")
+    */
     public function edit($id): Response
     {
         $user = $this->em->getRepository(User::class)->findBy(['id'=>$id]);
@@ -164,8 +162,8 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/admin/users/update/{id}", name="admin_users_update")
-     */
+    * @Route("/admin/users/update/{id}", name="admin_users_update")
+    */
     public function update(Request $request): Response
     {
         $user = $this->em->getRepository(User::class)->findBy(['id'=>$request->query->get('id')]);
@@ -188,7 +186,7 @@ class UserController extends AbstractController
         $isAdmin = $request->request->get('is_admin');
         $user->setIsAdmin($isAdmin);
 
-        if($isAdmin){
+        if ($isAdmin) {
             $user->setRoles(['ROLE_ADMIN']);
         }
 
@@ -206,8 +204,8 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/admin/users/delete/{id}", name="admin_users_delete")
-     */
+    * @Route("/admin/users/delete/{id}", name="admin_users_delete")
+    */
     public function delete($id): Response
     {
         $users = $this->em->getRepository(User::class)->findBy(['id'=>$id]);
@@ -220,8 +218,8 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/admin/users/{id}/change_password", name="admin_users_change_password")
-     */
+    * @Route("/admin/users/{id}/change_password", name="admin_users_change_password")
+    */
     public function changePassword($id): Response
     {
         $users = $this->em->getRepository(User::class)->findBy(['id'=>$id]);
@@ -232,8 +230,8 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/admin/users/{id}/password_handler", name="admin_users_password_handler")
-     */
+    * @Route("/admin/users/{id}/password_handler", name="admin_users_password_handler")
+    */
     public function passwordHandler($id,Request $request,UserPasswordHasherInterface $passwordHasher): Response
     {
         $users = $this->em->getRepository(User::class)->findBy(['id'=>$id]);
@@ -250,8 +248,5 @@ class UserController extends AbstractController
         $this->addFlash('sucess_admin', 'Upešno ste promenili password!');
         
         return $this->redirectToRoute("admin_show_users");
-
     }
-
-
 }

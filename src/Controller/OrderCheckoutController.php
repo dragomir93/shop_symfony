@@ -13,7 +13,6 @@ use App\Services\CartService;
 use App\Services\PDFService;
 use App\Services\UserService;
 use Doctrine\ORM\EntityManagerInterface;
-use PHPUnit\Framework\Constraint\Count;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -36,8 +35,8 @@ class OrderCheckoutController extends AbstractController
     }
 
     /**
-     * @Route("/checkout/", name="order_checkout")
-     */
+    * @Route("/checkout/", name="order_checkout")
+    */
     public function index(): Response
     {
         $user = new UserService();
@@ -67,11 +66,10 @@ class OrderCheckoutController extends AbstractController
     }
 
     /**
-     * @Route("/order/handle", name="order_handle")
-     */
+    * @Route("/order/handle", name="order_handle")
+    */
     public function handle(Request $request)
     {
-
         $user = new UserService();
         $orders = new Orders();
 
@@ -133,13 +131,12 @@ class OrderCheckoutController extends AbstractController
     }
 
     /**
-     * @Route("/order_preview", name="order_preview")
-     */
+    * @Route("/order_preview", name="order_preview")
+    */
     public function preview(Request $request,MailerInterface $mailer): Response
     {
         $cart_counter = new CartService($this->em,$this->security);
 
-        
         $orders = $this->em->getRepository(Orders::class)->getOrders($this->getUser($this->security));
 
         date_default_timezone_set("Europe/Belgrade");
@@ -162,12 +159,11 @@ class OrderCheckoutController extends AbstractController
          'cart_counter'    => $cart_counter->getCartCounter(),
          'orders'          => $orders,
         ]);
-    
     }
 
-     /**
-     * @Route("/order_pdf", name="order_pdf")
-     */
+    /**
+    * @Route("/order_pdf", name="order_pdf")
+    */
     public function orderPDF()
     {
         $pdf = new PDFService();
@@ -176,16 +172,15 @@ class OrderCheckoutController extends AbstractController
 
         // Retrieve the HTML generated in our twig file
         $html = $this->renderView('pdf/index.html.twig', [
-            'orders'          => $orders,
+            'orders' => $orders,
         ]);
 
         $pdf->getPDF($html);
-        
     }
 
     /**
-     * @Route("/admin/orders/edit/{id}", name="admin_orders_edit")
-     */
+    * @Route("/admin/orders/edit/{id}", name="admin_orders_edit")
+    */
     public function edit($id): Response
     {
         $orders = $this->em->getRepository(Orders::class)->findBy(['id'=>$id]);
@@ -245,8 +240,8 @@ class OrderCheckoutController extends AbstractController
     }
 
     /**
-     * @Route("/admin/orders/detail/edit/{id}", name="admin_orders_detail_edit")
-     */
+    * @Route("/admin/orders/detail/edit/{id}", name="admin_orders_detail_edit")
+    */
     public function editOrdersDetail($id): Response
     {
         $order_products = $this->em->getRepository(OrdersProducts::class)->findBy(['id'=>$id]);
@@ -260,9 +255,9 @@ class OrderCheckoutController extends AbstractController
         ]);
     }
 
-         /**
-     * @Route("/admin/orders/detail/update/{id}", name="admin_orders_detail_update")
-     */
+    /**
+    * @Route("/admin/orders/detail/update/{id}", name="admin_orders_detail_update")
+    */
     public function updateOrdersDetail(Request $request): Response
     {
         $orders_products = $this->em->getRepository(OrdersProducts::class)->findBy(['id'=>$request->query->get('id')]);
@@ -286,9 +281,9 @@ class OrderCheckoutController extends AbstractController
         return $this->redirectToRoute("admin_orders");
     }
 
-     /**
-     * @Route("/admin/orders/delete/{id}", name="admin_orders_delete")
-     */
+    /**
+    * @Route("/admin/orders/delete/{id}", name="admin_orders_delete")
+    */
     public function delete($id): Response
     {
         $orders = $this->em->getRepository(Orders::class)->findBy(['id'=>$id]);
@@ -305,7 +300,7 @@ class OrderCheckoutController extends AbstractController
 
 
     /**
-     * @Route("/admin/orders/detail/delete/{id}", name="admin_orders_detail_delete")
+    * @Route("/admin/orders/detail/delete/{id}", name="admin_orders_detail_delete")
     */
     public function deleteOrdersDetail($id): Response
     {

@@ -28,8 +28,8 @@ class CartController extends AbstractController
     }
 
     /**
-     * @Route("/cart", name="cart")
-     */
+    * @Route("/cart", name="cart")
+    */
     public function index(): Response
     { 
         $user = new UserService();
@@ -41,14 +41,14 @@ class CartController extends AbstractController
         return $this->render('cart/index.html.twig', [
             'url'             => 'cart',
             'cart_counter'    => $cart_counter->getCartCounter(),
-            'cart'            => $cart
+            'cart'            => $cart,
         ]);
     }
 
 
     /**
-     * @Route("/cart/add", name="cart_add")
-     */
+    * @Route("/cart/add", name="cart_add")
+    */
     public function add(Request $request): Response
     { 
         $user = new UserService(); 
@@ -110,12 +110,13 @@ class CartController extends AbstractController
         $this->addFlash('error', 'Morate se ulogovati kako bi nastavili sa kupovinom.');
 
         return new RedirectResponse($referer);
+
         }
     }
 
-     /**
-     * @Route("/cart/update", name="cart_update")
-     */
+    /**
+    * @Route("/cart/update", name="cart_update")
+    */
     public function update(Request $request): Response
     { 
         $cart = $this->em->find(Cart::class,$request->request->get('cart_id'));
@@ -127,8 +128,8 @@ class CartController extends AbstractController
     }
     
     /**
-     * @Route("/cart/delete/{id}/", name="cart_delete")
-     */
+    * @Route("/cart/delete/{id}/", name="cart_delete")
+    */
     public function delete($id): Response
     {
         $user = new UserService(); 

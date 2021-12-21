@@ -22,10 +22,9 @@ class HomeController extends AbstractController
         $this->security = $security;
     }
 
-    
     /**
-     * @Route("/home", name="home")
-     */
+    * @Route("/home", name="home")
+    */
     public function index(): Response
     {
         $articles = $this->em->getRepository(Articles::class)->findLimitedResults(5);
@@ -35,7 +34,7 @@ class HomeController extends AbstractController
         return $this->render('home/index.html.twig', [
             'url'           => 'home',
             'articles'      => $articles,
-            'cart_counter'  => $cart_counter->getCartCounter()
+            'cart_counter'  => $cart_counter->getCartCounter(),
         ]);
     }
 }

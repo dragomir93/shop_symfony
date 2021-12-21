@@ -26,8 +26,8 @@ class ArticleController extends AbstractController
     }
 
     /**
-     * @Route("/articles", name="articles")
-     */
+    * @Route("/articles", name="articles")
+    */
     public function index(): Response
     {
 
@@ -38,13 +38,13 @@ class ArticleController extends AbstractController
         return $this->render('article/index.html.twig', [
             'url'           => 'index',
             'articles'      => $articles,
-            'cart_counter'  => $cart_counter->getCartCounter()
+            'cart_counter'  => $cart_counter->getCartCounter(),
         ]);
     }
 
-     /**
-     * @Route("/article/{id}/", name="article_id")
-     */
+    /**
+    * @Route("/article/{id}/", name="article_id")
+    */
     public function getById($id): Response
     {
         $article = $this->em->getRepository(Articles::class)->findBy(['id'=>$id]);
@@ -54,21 +54,21 @@ class ArticleController extends AbstractController
         return $this->render('article/article.html.twig', [
             'url'           => 'article_single',
             'article'       => $article,
-            'cart_counter'  => $cart_counter->getCartCounter()
+            'cart_counter'  => $cart_counter->getCartCounter(),
         ]);
     }
 
-     /**
-     * @Route("/admin/article/add", name="admin_article_add")
-     */
+    /**
+    * @Route("/admin/article/add", name="admin_article_add")
+    */
     public function add(): Response
     {
         return $this->render('admin/products/create.html.twig');
     }
 
     /**
-     * @Route("/admin/article/store", name="admin_article_store")
-     */
+    * @Route("/admin/article/store", name="admin_article_store")
+    */
     public function store(Request $request, FileUploader $file_uploader): Response
     {
 
@@ -103,11 +103,9 @@ class ArticleController extends AbstractController
         $file = $request->files->get('thumbnail');
         $directoryPath = "images/uploads";
 
-        if ($file) 
-        {
+        if ($file) {
           $file_name = $file_uploader->upload($file);
-          if (null !== $file_name) // for example
-          {
+          if (null !== $file_name) {
             $full_path = $directoryPath.'/'.$file_name;
 
             $image = new Images();
@@ -120,17 +118,17 @@ class ArticleController extends AbstractController
 
             $this->em->persist($image);
             $this->em->flush();
-
           }
         }
+
         $this->addFlash('sucess_admin', 'Upešno ste se dodali artikl!');
         
         return $this->redirectToRoute("show_articles");
     }
 
     /**
-     * @Route("/admin/article/edit/{id}", name="admin_article_edit")
-     */
+    * @Route("/admin/article/edit/{id}", name="admin_article_edit")
+    */
     public function edit($id): Response
     {
         $articles = $this->em->getRepository(Articles::class)->findBy(['id'=>$id]);
@@ -141,8 +139,8 @@ class ArticleController extends AbstractController
     }
 
     /**
-     * @Route("/admin/article/update/{id}", name="admin_article_update")
-     */
+    * @Route("/admin/article/update/{id}", name="admin_article_update")
+    */
     public function update(Request $request, FileUploader $file_uploader): Response
     {
         $articles = $this->em->getRepository(Articles::class)->findBy(['id'=>$request->attributes->get('id')]);
@@ -193,18 +191,16 @@ class ArticleController extends AbstractController
 
             $this->em->persist($image);
             $this->em->flush();
-
         }
 
         $this->addFlash('sucess_admin', 'Upešno ste izmenili artikl!');
         
         return $this->redirectToRoute("show_articles");
-
     }
 
     /**
-     * @Route("/admin/article/delete/{id}", name="admin_article_delete")
-     */
+    * @Route("/admin/article/delete/{id}", name="admin_article_delete")
+    */
     public function delete($id): Response
     {
         $articles = $this->em->getRepository(Articles::class)->findBy(['id'=>$id]);

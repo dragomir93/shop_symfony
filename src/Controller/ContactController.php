@@ -24,22 +24,21 @@ class ContactController extends AbstractController
     }
     
     /**
-     * @Route("/contact", name="contact")
-     */
+    * @Route("/contact", name="contact")
+    */
     public function index(): Response
     {
-
         $cart_counter = new CartService($this->em,$this->security);
 
         return $this->render('contact/index.html.twig', [
             'url'           => 'contact',
-            'cart_counter'  => $cart_counter->getCartCounter()
+            'cart_counter'  => $cart_counter->getCartCounter(),
         ]);
     }
 
     /**
-     * @Route("/contact/handle", name="contact_handle")
-     */
+    * @Route("/contact/handle", name="contact_handle")
+    */
     public function handle(Request $request)
     {
         $contact = new Contact();
@@ -70,12 +69,11 @@ class ContactController extends AbstractController
         $this->addFlash('success', 'Upešno poslati podaci! Neko će vas kontaktirati.');
         
         return $this->redirectToRoute("contact");
-
     }
 
     /**
-     * @Route("/admin/contacts/edit/{id}", name="admin_contacts_edit")
-     */
+    * @Route("/admin/contacts/edit/{id}", name="admin_contacts_edit")
+    */
     public function edit($id): Response
     {
         $contacts = $this->em->getRepository(Contact::class)->findBy(['id'=>$id]);
@@ -86,8 +84,8 @@ class ContactController extends AbstractController
     }
 
     /**
-     * @Route("/admin/contacts/update/{id}", name="admin_contacts_update")
-     */
+    * @Route("/admin/contacts/update/{id}", name="admin_contacts_update")
+    */
     public function update(Request $request): Response
     {
         $contact = $this->em->find(Contact::class,$request->attributes->get('id'));
@@ -120,8 +118,8 @@ class ContactController extends AbstractController
     }
 
     /**
-     * @Route("/admin/contacts/delete/{id}", name="admin_contacts_delete")
-     */
+    * @Route("/admin/contacts/delete/{id}", name="admin_contacts_delete")
+    */
     public function delete($id): Response
     {
         $contacts = $this->em->getRepository(Contact::class)->findBy(['id'=>$id]);

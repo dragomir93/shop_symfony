@@ -47,9 +47,11 @@ class AdminController extends AbstractController
     */
     public function about(): Response{
         $about_us = $this->em->getRepository(AboutUs::class)->findLimitedResults(1);
-        if($about_us != null){
+
+        if ($about_us != null) {
             $about_us = $about_us[0];
         }
+
         return $this->render('admin/about/index.html.twig', [
             'about_us' => $about_us,
         ]);
@@ -71,8 +73,9 @@ class AdminController extends AbstractController
     */
     public function showArticles(): Response{
         $articles = $this->em->getRepository(Articles::class)->findAll();
+
         return $this->render('admin/products/index.html.twig',[
-            'articles'=>$articles,
+            'articles' => $articles,
         ]);
     }
 
@@ -81,8 +84,9 @@ class AdminController extends AbstractController
     */
     public function showUsers(): Response{
         $users = $this->em->getRepository(User::class)->findAll();
+
         return $this->render('admin/users/index.html.twig',[
-            'users'=>$users,
+            'users' => $users,
         ]);
     }
 
@@ -91,8 +95,9 @@ class AdminController extends AbstractController
     */
     public function showOrders(): Response{
         $orders = $this->em->getRepository(Orders::class)->findAll();
+
         return $this->render('admin/orders/index.html.twig',[
-            'orders'=>$orders,
+            'orders' => $orders,
         ]);
     }
 
@@ -101,8 +106,9 @@ class AdminController extends AbstractController
     */
     public function showOrdersDetail($id): Response{
         $orders = $this->em->getRepository(OrdersProducts::class)->findBy(['orders'=>$id]);
+
         return $this->render('admin/orders/order_products.html.twig',[
-            'orders'=>$orders,
+            'orders' => $orders,
         ]);
     }
 }
