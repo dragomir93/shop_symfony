@@ -170,6 +170,10 @@ admin_orders:
     path: /admin/show/orders
     controller: App\Controller\AdminController::showOrders
 
+admin_orders_detail:
+    path: /admin/show/orders/detail/{id}
+    controller: App\Controller\AdminController::showOrdersDetail
+
 admin_orders_edit:
     path: /admin/orders/edit/{id}
     controller: App\Controller\OrderCheckoutController::edit
@@ -181,3 +185,15 @@ admin_orders_update:
 admin_orders_delete:
     path: /admin/orders/delete/{id}
     controller: App\Controller\OrderCheckoutController::delete
+
+admin_orders_detail_edit:
+    path: /admin/orders/detail/edit/{id}
+    controller: App\Controller\OrderCheckoutController::editOrdersDetail
+
+admin_orders_detail_update:
+    path: /admin/orders/detail/update/{$id}
+    controller: App\Controller\OrderCheckoutController::updateOrdersDetail
+
+admin_orders_detail_delete:
+    path: /admin/orders/detail/delete/{id}
+    controller: App\Controller\OrderCheckoutController::deleteOrdersDetail

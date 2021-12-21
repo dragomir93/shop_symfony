@@ -1,0 +1,53 @@
+{% extends '/admin/admin.html.twig' %}
+
+{% block title %} Izmeni detalje pordužbine {% endblock %}
+
+{% block body %}
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-warning">Izmeni detalje pordužbine</h6>
+    </div>
+    <div class="card-body">
+        <form action="{{ path('admin_orders_detail_update',{ 'id':orders.id }) }}" method="POST" enctype="multipart/form-data">
+
+        <div class="form-group">
+            <label for="article">Artikl:</label>
+            <select id="article" class="form-control" name="article" required>   
+                {% if orders.articles.id != false %}
+                    <option value="{{ orders.articles.id }}" selected> {{ orders.articles.title }} </option>
+                {% endif %}
+
+                {% for value in articles %}
+                    {% if orders.articles.id != value.id %}
+                        <option value="{{ value.id }}"> {{ value.title }} </option> 
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="city">Količina:</label>
+            <input class="form-control" id="quantity"  type="number" 
+            name="quantity" value="{{ orders.quantity }}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="size">Veličina:</label>
+            <select id="size" class="form-control" name="size" required>   
+                {% if orders.size != false %}
+                    <option value="{{ orders.size }}" selected> {{ orders.size }} </option>
+                {% endif %}
+
+                {% for value in sizes %}
+                    {% if orders.size != value %}
+                        <option value="{{ value }}"> {{ value }} </option> 
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+
+        <div><input type="submit" class="btn btn-warning" value="Edit"></div>
+     </form>
+    </div>
+</div>
+{% endblock %}

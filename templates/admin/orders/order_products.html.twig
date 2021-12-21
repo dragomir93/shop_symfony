@@ -1,0 +1,46 @@
+{% extends '/admin/admin.html.twig' %}
+
+{% block title %} Pordudžbine {% endblock %}
+
+{% block body %}
+ <!-- Page Heading -->
+ <h1 class="h3 mb-2 text-gray-800">Pordudžbine</h1>
+ <!-- DataTales Example -->
+ <div class="card shadow mb-4">
+     <div class="card-body">
+         <div class="table-responsive">
+             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                 <thead>
+                     <tr>
+                         <th>Order ID</th>
+                         <th>Količina</th>
+                         <th>Naziv artikla</th>
+                         <th>Veličina</th>
+                         <th></th>
+                         <th>Izmeni/Obrisi</th>
+                     </tr>
+                 </thead>
+                 <tbody>
+                     {% for value in orders %}
+                     <tr>
+                         <td>{{ value.orders.id }}</td>
+                         <td>{{ value.quantity }}</td>
+                         <td>{{ value.articles.title }}</td>
+                         <td>{{ value.size }}</td>
+                         <td><a href="{{path('admin_show_orders')}}" class="btn btn-warning m-2 btn-sm" > 
+                         <i class="fas fa-list fa-sm fa-fw mr-2" style="color:#fff"></i>Nazad na pordužbine</a></th>
+                         <td>
+                         <a href="{{ path('admin_orders_detail_edit',{'id': value.id}) }}"><i class="fas fa-edit fa-sm fa-fw mr-2" style="color:#f6c23e"></i></a>
+                            <form class="d-inline" action="{{ path('admin_orders_detail_delete',{'id': value.id}) }}" method="POST" id="delete-form">
+                                <button type="submit"  class="btn"><i class="fas fa-trash fa-sm fa-fw mr-2" style="color:#f6c23e"></i></button>
+                            </form>
+                         </td>
+                     </tr>
+                     {% endfor %}
+                    
+                 </tbody>
+             </table>
+         </div>
+     </div>
+ </div>
+{% endblock %}

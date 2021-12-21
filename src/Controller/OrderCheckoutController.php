@@ -13,6 +13,7 @@ use App\Services\CartService;
 use App\Services\PDFService;
 use App\Services\UserService;
 use Doctrine\ORM\EntityManagerInterface;
+use PHPUnit\Framework\Constraint\Count;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -180,5 +181,140 @@ class OrderCheckoutController extends AbstractController
 
         $pdf->getPDF($html);
         
+    }
+
+    /**
+     * @Route("/admin/orders/edit/{id}", name="admin_orders_edit")
+     */
+    public function edit($id): Response
+    {
+        $orders = $this->em->getRepository(Orders::class)->findBy(['id'=>$id]);
+
+        $users = $this->em->getRepository(User::class)->findAll();
+        $payments = $this->em->getRepository(Payment::class)->findAll();
+        $countries = $this->em->getRepository(Country::class)->findAll();
+
+        return $this->render('admin/orders/edit.html.twig', [
+            'orders'   => $orders[0],
+            'users'    => $users,
+            'payments' => $payments,
+            'countries'=> $countries,
+        ]);
+    }
+
+     /**
+     * @Route("/admin/orders/update/{id}", name="admin_orders_update")
+     */
+    public function update(Request $request): Response
+    {
+        $orders = $this->em->getRepository(Orders::class)->findBy(['id'=>$request->query->get('id')]);
+        $orders = $orders[0];
+       
+        $total = $request->request->get('total');
+        $orders->setTotal($total);
+
+        $payment_id = $request->request->get('payment');
+        $payment = $this->em->find(Payment::class,$payment_id);
+        $orders->setPayment($payment);
+
+        $city = $request->request->get('city');
+        $orders->setCity($city);
+
+        $postal_code = $request->request->get('postal_code');
+        $orders->setPostalCode($postal_code);
+
+        $country_id = $request->request->get('country');
+        $country = $this->em->find(Country::class,$country_id);
+        $orders->setCountry($country);
+
+        $user_id = $request->request->get('user');
+        $user = $this->em->find(User::class,$user_id);
+        $orders->setUser($user);
+
+        $date = new \DateTime("now");
+        $orders->setUpdatedAt($date);
+
+        $orders->setCreatedAt($date);
+
+        $this->em->persist($orders);
+        $this->em->flush();
+
+        $this->addFlash('sucess_admin', 'Upešno ste izmenili porudžbinu!');
+
+        return $this->redirectToRoute("admin_show_orders");
+    }
+
+    /**
+     * @Route("/admin/orders/detail/edit/{id}", name="admin_orders_detail_edit")
+     */
+    public function editOrdersDetail($id): Response
+    {
+        $order_products = $this->em->getRepository(OrdersProducts::class)->findBy(['id'=>$id]);
+        $articles = $this->em->getRepository(Articles::class)->findAll();
+        $sizes = ['velika','extra_velika','mala','srednja'];
+
+        return $this->render('admin/orders/edit_order_products.html.twig', [
+            'orders'   => $order_products[0],
+            'articles' => $articles,
+            'sizes'    => $sizes,
+        ]);
+    }
+
+         /**
+     * @Route("/admin/orders/detail/update/{id}", name="admin_orders_detail_update")
+     */
+    public function updateOrdersDetail(Request $request): Response
+    {
+        $orders_products = $this->em->getRepository(OrdersProducts::class)->findBy(['id'=>$request->query->get('id')]);
+        $orders_products = $orders_products[0];
+       
+        $quantity = $request->request->get('quantity');
+        $orders_products->setQuantity($quantity);
+
+        $article_id = $request->request->get('article');
+        $article = $this->em->find(Articles::class,$article_id);
+        $orders_products->setArticles($article);
+
+        $size = $request->request->get('size');
+        $orders_products->setSize($size);
+
+        $this->em->persist($orders_products);
+        $this->em->flush();
+
+        $this->addFlash('sucess_admin', 'Upešno ste izmenili detalje porudžbine!');
+
+        return $this->redirectToRoute("admin_orders");
+    }
+
+     /**
+     * @Route("/admin/orders/delete/{id}", name="admin_orders_delete")
+     */
+    public function delete($id): Response
+    {
+        $orders = $this->em->getRepository(Orders::class)->findBy(['id'=>$id]);
+        $order_products = $this->em->getRepository(OrdersProducts::class)->findBy(['orders'=>$id]);
+
+        $this->em->remove($orders);
+        $this->em->remove($order_products[0]);
+        $this->em->flush();
+
+        $this->addFlash('sucess_admin', 'Upešno ste se obrisali željeni red!');
+
+        return $this->redirectToRoute("admin_show_orders");
+    }
+
+
+    /**
+     * @Route("/admin/orders/detail/delete/{id}", name="admin_orders_detail_delete")
+    */
+    public function deleteOrdersDetail($id): Response
+    {
+        $order_products = $this->em->getRepository(OrdersProducts::class)->findBy(['id'=>$id]);
+        $this->em->remove($order_products[0]);
+        $this->em->flush();
+
+        $this->addFlash('sucess_admin', 'Upešno ste se obrisali željeni red!');
+
+        return $this->redirectToRoute("admin_show_orders");
     }
 }

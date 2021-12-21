@@ -33,11 +33,11 @@
                          <td>{{ value.getPostalCode }}</td>
                          <td>{{ value.country.name }}</td>
                          <td>{{ value.user.name }} </td>
-                         <td><a href="{{path('admin_users_change_password',{'id':value.id})}}" class="btn btn-warning m-2 btn-sm" > 
+                         <td><a href="{{path('admin_orders_detail',{'id':value.id})}}" class="btn btn-warning m-2 btn-sm" > 
                          <i class="fas fa-list fa-sm fa-fw mr-2" style="color:#fff"></i>Vidi pordužbinu</a></th>
                          <td>
-                         <a href="{{ path('admin_article_edit',{'id': value.id}) }}"><i class="fas fa-edit fa-sm fa-fw mr-2" style="color:#f6c23e"></i></a>
-                            <form class="d-inline" action="{{ path('admin_article_delete',{'id': value.id}) }}" method="POST" id="delete-form">
+                         <a href="{{ path('admin_orders_edit',{'id': value.id}) }}"><i class="fas fa-edit fa-sm fa-fw mr-2" style="color:#f6c23e"></i></a>
+                            <form class="d-inline" action="{{ path('admin_orders_delete',{'id': value.id}) }}" method="POST" id="delete-form">
                                 <button type="submit"  class="btn"><i class="fas fa-trash fa-sm fa-fw mr-2" style="color:#f6c23e"></i></button>
                             </form>
                          </td>

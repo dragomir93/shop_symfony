@@ -6,6 +6,7 @@ use App\Entity\AboutUs;
 use App\Entity\Articles;
 use App\Entity\Contact;
 use App\Entity\Orders;
+use App\Entity\OrdersProducts;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -91,6 +92,16 @@ class AdminController extends AbstractController
     public function showOrders(): Response{
         $orders = $this->em->getRepository(Orders::class)->findAll();
         return $this->render('admin/orders/index.html.twig',[
+            'orders'=>$orders,
+        ]);
+    }
+
+    /**
+    * @Route("/admin/show/orders/detail/{id}", name="admin_show_orders_detail")
+    */
+    public function showOrdersDetail($id): Response{
+        $orders = $this->em->getRepository(OrdersProducts::class)->findBy(['orders'=>$id]);
+        return $this->render('admin/orders/order_products.html.twig',[
             'orders'=>$orders,
         ]);
     }

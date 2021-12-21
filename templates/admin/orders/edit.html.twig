@@ -1,0 +1,79 @@
+{% extends '/admin/admin.html.twig' %}
+
+{% block title %} Izmeni pordužbinu {% endblock %}
+
+{% block body %}
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-warning">Izmeni pordužbinu</h6>
+    </div>
+    <div class="card-body">
+        <form action="{{ path('admin_orders_update',{ 'id':orders.id }) }}" method="POST" enctype="multipart/form-data">
+
+        <div class="form-group">
+            <label for="total">Totalna cena:</label>
+            <input id="total" class="form-control" type="text"  
+            name="total" value="{{ orders.total }}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="payment">Način plaćanja:</label>
+            <select id="payment" class="form-control" name="payment" required>   
+                {% if orders.payment.id != false %}
+                    <option value="{{ orders.payment.id }}" selected> {{ orders.payment.name }} </option>
+                {% endif %}
+
+                {% for value in payments %}
+                    {% if orders.payment.id != value.id %}
+                        <option value="{{ value.id }}"> {{ value.name }} </option> 
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="city">Grad:</label>
+            <input class="form-control" id="city"  type="text" 
+            name="city" value="{{ orders.city }}" required>
+        </div>
+
+        <div class="form-group">
+           <label for="postal_code">Poštanski kod:</label>
+            <input id="postal_code" class="form-control" type="text"  
+            name="postal_code" value="{{ orders.getPostalCode }}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="country">Zemlja:</label>
+            <select id="country" class="form-control" name="country" required>   
+                {% if orders.country.id != false %}
+                    <option value="{{ orders.country.id }}" selected> {{ orders.country.name }} </option>
+                {% endif %}
+
+                {% for value in countries %}
+                    {% if orders.country.id != value.id %}
+                        <option value="{{ value.id }}"> {{ value.name }} </option> 
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="user">Korisnik:</label>
+            <select id="user" class="form-control" name="user" required>   
+                {% if orders.user.id != false %}
+                    <option value="{{ orders.user.id }}" selected> {{ orders.user.name }} </option>
+                {% endif %}
+
+                {% for value in users %}
+                    {% if orders.user.id != value.id %}
+                        <option value="{{ value.id }}"> {{ value.name }} </option> 
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+        <div><input type="submit" class="btn btn-warning" value="Edit"></div>
+     </form>
+    </div>
+</div>
+{% endblock %}
