@@ -136,8 +136,6 @@ class OrderCheckoutController extends AbstractController
         $cart_counter = new CartService($this->em,$this->security);
 
         $orders = $this->em->getRepository(Orders::class)->getOrders($this->getUser($this->security));
-
-        date_default_timezone_set("Europe/Belgrade");
         
         $email = new MailService('cokomoko.sb@gmail.com','Coko Moko', $orders[0]->getUser()->getEmail(), $orders[0]->getUser()->getName(),
         'cokomoko.sb@gmail.com','cokomoko.sb@gmail.com','COKO MOKO- Porudžbina broj:'.$orders[0]->getId(),'email/index.html.twig',$orders);
