@@ -12,16 +12,14 @@ use App\Entity\User;
 use App\Services\CartService;
 use App\Services\PDFService;
 use App\Services\UserService;
+use App\Services\MailService;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
-use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Mime\Address;
-
 class OrderCheckoutController extends AbstractController
 {
     protected $em;
@@ -140,19 +138,10 @@ class OrderCheckoutController extends AbstractController
         $orders = $this->em->getRepository(Orders::class)->getOrders($this->getUser($this->security));
 
         date_default_timezone_set("Europe/Belgrade");
-
-        $email = (new TemplatedEmail())
-        ->from(new Address('cokomoko.sb@gmail.com','Coko Moko'))
-        ->to(new Address($orders[0]->getUser()->getEmail(),$orders[0]->getUser()->getName()))
-        ->bcc('cokomoko.sb@gmail.com')
-        ->replyTo('cokomoko.sb@gmail.com')
-        ->subject('COKO MOKO- Porudžbina broj:'.$orders[0]->getId())
-        ->htmlTemplate('email/index.html.twig')
-        ->context([
-            'orders' => $orders,
-        ]);
-
-        $mailer->send($email);
+        
+        $email = new MailService('cokomoko.sb@gmail.com','Coko Moko', $orders[0]->getUser()->getEmail(), $orders[0]->getUser()->getName(),
+        'cokomoko.sb@gmail.com','cokomoko.sb@gmail.com','COKO MOKO- Porudžbina broj:'.$orders[0]->getId(),'email/index.html.twig',$orders);
+        $email->sendEmail($mailer);
 
         return $this->render('order_checkout/order_preview.html.twig', [
          'url'             => 'order_preview',
