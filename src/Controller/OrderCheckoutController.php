@@ -301,7 +301,7 @@ class OrderCheckoutController extends AbstractController
         $orders = $this->em->getRepository(Orders::class)->findBy(['id'=>$id]);
         $order_products = $this->em->getRepository(OrdersProducts::class)->findBy(['orders'=>$id]);
 
-        $this->em->remove($orders);
+        $this->em->remove($orders[0]);
         $this->em->remove($order_products[0]);
         $this->em->flush();
 
