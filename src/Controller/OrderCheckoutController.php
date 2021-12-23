@@ -99,6 +99,8 @@ class OrderCheckoutController extends AbstractController
         $users = $this->em->find(User::class,$user->getUser($this->security));
         $orders->setUser($users);
 
+        $orders->setDone(0);
+
         $this->em->persist($orders);
         $this->em->flush();
 
@@ -129,6 +131,21 @@ class OrderCheckoutController extends AbstractController
     }
 
     /**
+    * @Route("/order/confirm/{id}", name="order_confirm")
+    */
+    public function orderConfirm($id): Response
+    {
+        $order = $this->em->getRepository(Orders::class)->find($id);
+        $order->setDone(1);
+        $this->em->persist($order);
+        $this->em->flush();
+
+        $this->addFlash('sucess_done', 'Možete nastaviti sa kupovinom!');
+            
+        return $this->redirectToRoute("home");
+    }
+
+    /**
     * @Route("/order_preview", name="order_preview")
     */
     public function preview(Request $request,MailerInterface $mailer): Response
@@ -136,14 +153,18 @@ class OrderCheckoutController extends AbstractController
         $cart_counter = new CartService($this->em,$this->security);
 
         $orders = $this->em->getRepository(Orders::class)->getOrders($this->getUser($this->security));
-
-        $email = new MailService('cokomoko.sb@gmail.com','Coko Moko', 
-        $orders[0]->getUser()->getEmail(), $orders[0]->getUser()->getName(),
-        'cokomoko.sb@gmail.com','cokomoko.sb@gmail.com',
-        'COKO MOKO- Porudžbina broj:'.$orders[0]->getId(),
-        'email/index.html.twig',$orders);
         
-        $email->sendEmail($mailer);
+        foreach ($orders as $order) {
+            if ($order->getDone() == false) {
+            $email = new MailService('cokomoko.sb@gmail.com','Coko Moko', 
+            $orders[0]->getUser()->getEmail(), $orders[0]->getUser()->getName(),
+            'cokomoko.sb@gmail.com','cokomoko.sb@gmail.com',
+            'COKO MOKO- Porudžbina broj:'.$orders[0]->getId(),
+            'email/index.html.twig',$orders);
+
+            $email->sendEmail($mailer);
+            }
+        }
 
         return $this->render('order_checkout/order_preview.html.twig', [
          'url'             => 'order_preview',

@@ -72,6 +72,11 @@ class Orders
      */
     private $ordersProducts;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $done;
+
     public function __construct()
     {
         $this->ordersProducts = new ArrayCollection();
@@ -186,6 +191,18 @@ class Orders
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getDone(): ?bool
+    {
+        return $this->done;
+    }
+
+    public function setDone(bool $done): self
+    {
+        $this->done = $done;
 
         return $this;
     }

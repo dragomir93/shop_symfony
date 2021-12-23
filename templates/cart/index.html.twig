@@ -85,6 +85,7 @@
 					  </div>
     			</div>
     		</div>
+			{% if cart is not empty %}
     		<div class="row justify-content-end">
     			<div class="col col-lg-3 col-md-6 mt-5 cart-wrap ftco-animate">
     				<div class="cart-total mb-3">
@@ -110,6 +111,7 @@
     				<p class="text-center"><a href="{{ path('order_checkout') }}" class="btn btn-primary py-3 px-4">Nastavi na plaćanje</a></p>
     			</div>
     		</div>
+			{% endif %}
 		</div>
 	</section>
 {% block footer %}

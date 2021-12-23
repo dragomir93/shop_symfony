@@ -23,13 +23,13 @@
         </div>
     </div>
 </section>
-
 <section class="ftco-section">
     <div class="container">
     	<div class="row">
         	<div class="col-xl-12 ftco-animate">
 				<div class="billing-form ftco-bg-dark p-3">
                     {% for value in orders %}
+                    {% if value.done == 0 %} 
                     <h3 class="mb-4 billing-heading">Detalji porudžbine</h3>
                     <form action="{{ path('order_pdf') }}" method="POST" target="_blank">
                     <button type="submit" class="btn btn-outline-danger float-right">
@@ -132,7 +132,8 @@
                         <hr>
                         </div>
                      </div>
-                     <a href="{{ path('home')}}" style="color:white" class="btn btn-primary py-3 px-4">Vrati se na poručivanje</a>
+                     <a href="{{ path('order_confirm',{'id':value.id})}}" style="color:white" class="btn btn-primary py-3 px-4">Vrati se na poručivanje</a>
+                    {% endif  %}
                     {% endfor %}   
                 </div>
             </div>

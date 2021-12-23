@@ -58,6 +58,10 @@ order_handle:
     path: /order/handle
     controller: App\Controller\OrderCheckoutController::handle
 
+order_confirm:
+    path: /order/confirm/{id}
+    controller: App\Controller\OrderCheckoutController::orderConfirm
+
 order_preview:
     path: /order_preview
     controller: App\Controller\OrderCheckoutController::preview

@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 {% for value in orders %}
+{% if value.done == 0 %} 
   <title>Faktura {{ value.id}}</title>
 
   <style type="text/css">
@@ -106,6 +107,7 @@
   </table>
   <br><br><br><br><br>
   <p>Ovaj dokument je validan bez pečata i potpisa.Poreski obveznik nije u sistemu PDV-a.</p>
+{% endif %}
 {% endfor %}
 </body>
 </html>

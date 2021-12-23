@@ -21,6 +21,11 @@
                   {{ message }}
               </div>
             {% endfor %}
+            {% for message in app.flashes('sucess_done') %}
+              <div class="alert alert-success" role="alert">
+                  {{ message }}
+              </div>
+            {% endfor %}
             	<span class="subheading">Dobrodošli</span>
               <h1 class="mb-4">Probajte najbolju kafu u Srbiji</h1>
               <p class="mb-4 mb-md-5">U nastavku možete pogledati našu ponudu i poručiti neki od proizvoda</p>

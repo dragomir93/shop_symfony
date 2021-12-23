@@ -35,14 +35,14 @@
 						<div class="col-md-6">
 							<div class="form-group">
 								<label for="firstname">Ime</label>
-								<input type="text" class="form-control" name="firstname" placeholder="" value="{{ name[0] }}">
+								<input type="text" class="form-control" name="firstname" placeholder="" value="{{ name[0] }}" required>
 							</div>
 						</div>
 
 						<div class="col-md-6">
 							<div class="form-group">
 								<label for="lastname">Prezime</label>
-								<input type="text" class="form-control" name="lastname" placeholder="" value="{{ name[1] }}">
+								<input type="text" class="form-control" name="lastname" placeholder="" value="{{ name[1] }}" required>
 							</div>
 						</div>
 
@@ -53,7 +53,7 @@
 								<label for="country">Zemlja</label>
 								<div class="select-wrap">
 								<div class="icon"><span class="ion-ios-arrow-down"></span></div>
-								<select name="country" id="country" class="form-control">
+								<select name="country" id="country" class="form-control" required>
 								{% for country in countries %}
 									<option value="{{ country.id }}" style="background:black;color:white;">{{ country.name }}</option>
 								{% endfor %}
@@ -67,7 +67,7 @@
 						<div class="col-md-6">
 							<div class="form-group">
 								<label for="streetaddress">Ulica i broj</label>
-								<input type="text" class="form-control" name="adress" placeholder="Unesite ime ulice i broj" value="{{app.user.adress}}">
+								<input type="text" class="form-control" name="adress" placeholder="Unesite ime ulice i broj" value="{{app.user.adress}}" required>
 							</div>
 						</div>
 
@@ -81,14 +81,14 @@
 						<div class="col-md-6">
 							<div class="form-group">
 								<label for="towncity">Grad</label>
-								<input type="text" class="form-control" name="city" placeholder="">
+								<input type="text" class="form-control" name="city" placeholder="Unesite grad" required>
 							</div>
 						</div>
 
 						<div class="col-md-6">
 							<div class="form-group">
 								<label for="postcodezip">Poštanski broj</label>
-								<input type="text" class="form-control" name="postal_code" placeholder="">
+								<input type="text" class="form-control" name="postal_code" placeholder="Unesite poštanski broj" required>
 							</div>
 						</div>
 						<div class="w-100"></div>
@@ -96,13 +96,13 @@
 						<div class="col-md-6">
 							<div class="form-group">
 								<label for="phone">Telefon</label>
-								<input type="text" class="form-control" placeholder="" name="phone" value="{{app.user.phone}}">
+								<input type="text" class="form-control" placeholder="" name="phone" value="{{app.user.phone}}" required>
 							</div>
 						</div>
 						<div class="col-md-6">
 							<div class="form-group">
 								<label for="emailaddress">Email Adresa</label>
-								<input type="text" class="form-control" placeholder="" name="email" value="{{app.user.email}}">
+								<input type="text" class="form-control" placeholder="" name="email" value="{{app.user.email}}" required>
 							</div>
 						</div>
 						<div class="w-100"></div>
@@ -139,7 +139,7 @@
 							<div class="form-group">
 								<div class="col-md-12">
 									<div class="radio">
-										<label><input type="radio" name="payment" class="mr-2" value="{{ payment.id }}"> {{ payment.name }}</label>
+										<label><input type="radio" name="payment" class="mr-2" value="{{ payment.id }}" required> {{ payment.name }}</label>
 									</div>
 								</div>
 							</div>
