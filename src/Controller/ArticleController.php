@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Articles;
 use App\Entity\Images;
-use App\Service\FileUploader;
+use App\Services\FileUploader;
 use App\Services\CartService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
